@@ -15,6 +15,7 @@
 | Route.resource('user', 'UserController')
 */
 
-const Route = use('Route')
+const Route = use('Route');
 
-Route.get('/', 'GameController.getQuestion')
+Route.get('question/', 'GameController.getQuestion');
+Route.get('result/:id/:answer', 'GameController.getResult');
