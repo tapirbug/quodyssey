@@ -17,5 +17,7 @@
 
 const Route = use('Route');
 
-Route.get('question/', 'GameController.getQuestion');
-Route.get('result/:id/:answer', 'GameController.getResult');
+Route.get('game/start/:gameId', 'GameController.startGame');
+Route.get('quiz/set/:gameId', 'GameController.setQuestion');
+Route.get('quiz/get/:gameId', 'GameController.getQuestion');
+Route.get('quiz/result/:questionId/:answer', 'GameController.getResult');

@@ -1,5 +1,7 @@
 {
-	"questions": [
+	"questions": 
+	{
+		"0": 
 		{
 			"id": "0",
 			"question": "What does JSON stand for?",
@@ -8,6 +10,7 @@
 			"c": "Juvenile Sea Orchid Narwhal",
 			"d": "John Snow Order Nation"
 		},
+		"1": 
 		{
 			"id": "1",
 			"question": "Which number comes after 6?",
@@ -16,15 +19,10 @@
 			"c": "6",
 			"d": "42"
 		}
-	],
-	"answers": [
-		{
-			"id": "0",
-			"answer": "b"
-		},
-		{
-			"id": "1",
-			"answer": "a"
-		}
-	]
+	},
+	"answers": 
+	{
+		"0": "b",
+		"1": "a"
+	}
 }
