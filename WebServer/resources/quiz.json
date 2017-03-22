@@ -4,6 +4,7 @@
 		"0": 
 		{
 			"id": "0",
+			"type": "choice",
 			"question": "What does JSON stand for?",
 			"a": "Java Sound Omitting Node",
 			"b": "JavaScript Object Notation",
@@ -13,16 +14,24 @@
 		"1": 
 		{
 			"id": "1",
+			"type": "choice",
 			"question": "Which number comes after 6?",
 			"a": "7",
 			"b": "5",
 			"c": "6",
 			"d": "42"
+		},
+		"3": 
+		{
+			"id": "3",
+			"type": "estimate",
+			"question": "Please answer 171.7"
 		}
 	},
 	"answers": 
 	{
 		"0": "b",
-		"1": "a"
+		"1": "a",
+		"3": "171.7"
 	}
 }
