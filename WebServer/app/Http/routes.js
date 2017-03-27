@@ -20,5 +20,5 @@ const Route = use('Route');
 Route.get('start/:gameId', 'GameController.start');
 Route.get('ask/:gameId', 'GameController.ask');
 Route.get('getq/:gameId', 'GameController.getQ');
-Route.get('answer/:gameId/:round/:answer', 'GameController.answer');
-Route.get('upgrade/:gameId/:round', 'GameController.upgrade');
+Route.get('answer/:gameId/:roundId/:answer', 'GameController.answer');
+Route.get('upgrade/:gameId/:roundId', 'GameController.upgrade');
