@@ -6,15 +6,14 @@ let games = {};
 class GameController {
 	* start(request, response) {
 		let gameId = request.param("gameId");
-		if (games[gameId] != undefined) return response.json({"success": false});
-
+		if (games[gameId] != undefined) return response.json({"success": false, "error": "ID unavailable."});
 		games[gameId] = {"roundId": 0, "rounds": []};
 		return response.json({"success": true, "gameId": gameId}); 
 	}
 
 	* ask(request, response) {
 		let gameId = request.param("gameId");
-		if (games[gameId] == undefined) return response.json({"success": false});
+		if (games[gameId] == undefined) return response.json({"success": false, "error": "Game not found."});
 
 		games[gameId].roundId++;
 		let keys = Object.keys(Quiz.questions);
@@ -33,9 +32,10 @@ class GameController {
 
 	* getQ(request, response) {
 		let gameId = request.param("gameId");
-		if (games[gameId] == undefined) return response.json({"success": false});
+		if (games[gameId] == undefined) return response.json({"success": false, "error": "Game not found."});
 		let game = games[gameId];
 		let round = game.rounds[game.roundId];
+		if (round == undefined || round.end < new Date()) return response.json({"success": false, "error": "No question available."});
 		return response.json({"success": true, "round": game.roundId, "question": Quiz.questions[round.question], "end": round.end}); 
 	}
 
@@ -43,37 +43,47 @@ class GameController {
 		let gameId = request.param("gameId");
 		let roundId = request.param("roundId");
 		let answer = request.param("answer");
-		if (games[gameId] == undefined || games[gameId].rounds[roundId] == undefined) return response.json({"success": false});
+		if (games[gameId] == undefined) return response.json({"success": false, "error": "Game not found."});
+		if (games[gameId].rounds[roundId] == undefined) return response.json({"success": false, "error": "Round not found."});
 		let game = games[gameId];
 		let round = game.rounds[roundId];
+		if (round.end < new Date()) return response.json({"success": false, "error": "Round over."});
 		let type = Quiz.questions[round.question].type;
 		round.participants++;
 		if (type == "choice") {
-			round[answer]++;
-			let correct = answer == Quiz.answers[round.question];
-			if (correct) round.correct++;
-			return response.json({"success": true, "result": correct});
+			 round[answer]++;
+			if (answer == Quiz.answers[round.question]) round.correct++;
+			return response.json({"success": true});
 		} else if (type == "estimate") {
 			if (round.min == undefined || answer < round.min) round.min = answer;
 			if (round.max == undefined || answer > round.max) round.max = answer;
 			let correctMin = Quiz.answers[round.question] * 0.9;
 			let correctMax = Quiz.answers[round.question] * 1.1;
-			let correct = answer >= correctMin && answer <= correctMax;
-			if (correct) round.correct++;
-			return response.json({"success": true, "result": correct});
+			if (answer >= correctMin && answer <= correctMax) round.correct++;
+			return response.json({"success": true});
 		}
 	}
 
-	* upgrade(request, response) {
+	* resultQ(request, response) {
 		let gameId = request.param("gameId");
 		let roundId = request.param("roundId");
-		if (games[gameId] == undefined || games[gameId].rounds[roundId] == undefined) return response.json({"success": false});
+		if (games[gameId] == undefined) return response.json({"success": false, "error": "Game not found."});
+		if (games[gameId].rounds[roundId] == undefined) return response.json({"success": false, "error": "Round not found."});
 		let round = games[gameId].rounds[roundId];
-		if (new Date() < round.end) {
-			return response.json({"success": false});
-		} else {
-			return response.json({"success": true, "result": round.correct / round.participants});
-		}
+		if (round.end > new Date()) return response.json({"success": false, "error": "Round not over."});
+		let type = Quiz.questions[round.question].type;
+		let answer = Quiz.answers[round.question];
+		return response.json({"success": true, "answer": answer, "result": round});
+	}
+
+	* resultA(request, response) {
+		let gameId = request.param("gameId");
+		let roundId = request.param("roundId");
+		if (games[gameId] == undefined) return response.json({"success": false, "error": "Game not found."});
+		if (games[gameId].rounds[roundId] == undefined) return response.json({"success": false, "error": "Round not found."});
+		let round = games[gameId].rounds[roundId];
+		if (round.end > new Date()) return response.json({"success": false, "error": "Round not over."});
+		return response.json({"success": true, "result": round.correct == 0 ? 0 : round.correct / round.participants});
 	}
 }
 
