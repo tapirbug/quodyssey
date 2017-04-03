@@ -51,15 +51,13 @@ class GameController {
 		let type = Quiz.questions[round.question].type;
 		round.participants++;
 		if (type == "choice") {
-			 round[answer]++;
+			round[answer]++;
 			if (answer == Quiz.answers[round.question]) round.correct++;
 			return response.json({"success": true});
 		} else if (type == "estimate") {
 			if (round.min == undefined || answer < round.min) round.min = answer;
 			if (round.max == undefined || answer > round.max) round.max = answer;
-			let correctMin = Quiz.answers[round.question] * 0.9;
-			let correctMax = Quiz.answers[round.question] * 1.1;
-			if (answer >= correctMin && answer <= correctMax) round.correct++;
+			if (Math.abs(Quiz.answers[round.question] - answer) < Quiz.answers[round.question] * 0.1) round.correct++;
 			return response.json({"success": true});
 		}
 	}
