@@ -36,7 +36,8 @@ class GameController {
 		let game = games[gameId];
 		let round = game.rounds[game.roundId];
 		if (round == undefined || round.end < new Date()) return response.json({"success": false, "error": "No question available."});
-		return response.json({"success": true, "round": game.roundId, "question": Quiz.questions[round.question], "end": round.end}); 
+		let remainingTime = round.end.getTime() - new Date().getTime();
+		return response.json({"success": true, "round": game.roundId, "question": Quiz.questions[round.question], "end": remainingTime}); 
 	}
 
 	* answer(request, response) {
