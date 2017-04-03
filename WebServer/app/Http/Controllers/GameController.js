@@ -5,9 +5,14 @@ let games = {};
 
 class GameController {
 	* start(request, response) {
-		let gameId = request.param("gameId");
+		let gameId = request.param("gameId", -1);
+		if (gameId == -1) {
+			gameId = Math.floor(Math.random() * 9000 + 1000);
+			while (games[gameId] != undefined) gameId = Math.floor(Math.random() * 9000 + 1000);
+		}
+		if (gameId < 1000 || gameId > 9999) return response.json({"success": false, "error": "Wrong ID format."});
 		if (games[gameId] != undefined) return response.json({"success": false, "error": "ID unavailable."});
-		games[gameId] = {"roundId": 0, "rounds": []};
+		games[gameId] = {"roundId": 0, "rounds": [], "scoreboard": []};
 		return response.json({"success": true, "gameId": gameId}); 
 	}
 
