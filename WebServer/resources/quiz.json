@@ -93,7 +93,7 @@
 		{
 			"id": "11",
 			"type": "choice",
-			"question": "What does the "GR" at the key "ALTGR" stand for?",
+			"question": "What does the 'GR' at the key 'ALTGR' stand for?",
 			"a": "Alt Greek",
 			"b": "Alt Graph",
 			"c": "Alt Great",
