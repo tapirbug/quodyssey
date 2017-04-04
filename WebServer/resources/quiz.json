@@ -26,12 +26,239 @@
 			"id": "3",
 			"type": "estimate",
 			"question": "Please answer 171.7"
+		},
+		"4":
+		{
+			"id": "4",
+			"type": "choice",
+			"question": "What does CSS stand for?",
+			"a": "Cascading Style Sheets",
+			"b": "Controverse Script Style",
+			"c": "Converting Section Sheet",
+			"d": "Comfortable Selfie Stick"
+		},
+		"5":
+		{
+			"id": "5",
+			"type": "estimate",
+			"question": "How many worker-bees are in a beehive in summer?"
+		},
+		"6":
+		{
+			"id": "6",
+			"type": "choice",
+			"question": "Which is the correct order of releases for this Disney movies?",
+			"a": "Aladdin - Bambi - Mulan - Toy Story",
+			"b": "Bambi - Aladdin - Toy Story - Mulan",
+			"c": "Mulan - Bambi - Aladdin - Toy Story",
+			"d": "Toy Story - Aladdin - Bambi - Mulan"
+		},
+		"7":
+		{
+			"id": "7",
+			"type": "choice",
+			"question": "University Hagenberg: In which year was the foundation?",
+			"a": "1990",
+			"b": "1996",
+			"c": "1989",
+			"d": "1993"
+		},
+		"8":
+		{
+			"id": "8",
+			"type": "estimate",
+			"question": "How many partner-colleges are working with FH Upper Austria?"
+		},
+		"9":
+		{
+			"id": "9",
+			"type": "choice",
+			"question": "Grand Central Terminal, New York is the world's",
+			"a": "largest railway station",
+			"b": "highest railway station",
+			"c": "longest railway station",
+			"d": "None of these"
+		},
+		"10":
+		{
+			"id": "10",
+			"type": "choice",
+			"question": "For which of the following disciplines is Nobel Prize awarded?",
+			"a": "Physics and Chemistry",
+			"b": "Physiology or Medicine",
+			"c": "Literature, Peace and Economics",
+			"d": "All of these"
+		},
+		"11":
+		{
+			"id": "11",
+			"type": "choice",
+			"question": "What does the "GR" at the key "ALTGR" stand for?",
+			"a": "Alt Greek",
+			"b": "Alt Graph",
+			"c": "Alt Great",
+			"d": "None of these"
+		},
+		"12":
+		{
+			"id": "12",
+			"type": "choice",
+			"question": "Photophobia is",
+			"a": "the fear of being photographed",
+			"b": "the ability to perceive light",
+			"c": "abnormal intolerance of light",
+			"d": "the fear of memory-flashbacks"
+		},
+		"13":
+		{
+			"id": "13",
+			"type": "choice",
+			"question": "Penicillin was invented by",
+			"a": "Dr Jonas E. Salk",
+			"b": "Gregory Mendal",
+			"c": "Paul Ehrlich",
+			"d": "A. Fleming"
+		},
+		"14":
+		{
+			"id": "14",
+			"type": "choice",
+			"question": "The headquarter of International Atomic Energy Agency are situated at",
+			"a": "Vienna",
+			"b": "Paris",
+			"c": "Rome",
+			"d": "Washington, D.C."
+		},
+		"15":
+		{
+			"id": "15",
+			"type": "choice",
+			"question": "When was Mahatma Gandhi assassinated?",
+			"a": "1951",
+			"b": "1948",
+			"c": "1958",
+			"d": "1971"
+		},
+		"16":
+		{
+			"id": "16",
+			"type": "choice",
+			"question": "When was Shakespeare born?",
+			"a": "1564",
+			"b": "1618",
+			"c": "1642",
+			"d": "1776"
+		},
+		"17":
+		{
+			"id": "17",
+			"type": "choice",
+			"question": "Where is the Eiffel Tower located in Paris?",
+			"a": "Bois de Boulogne",
+			"b": "Champ de Mars",
+			"c": "Jardin des Plantes",
+			"d": "Parc de Belleville"
+		},
+		"18":
+		{
+			"id": "18",
+			"type": "choice",
+			"question": "Who plays Lara Croft in the Tomb Raider series of films?",
+			"a": "Angelina Jolie",
+			"b": "Minnie Driver",
+			"c": "Nell McAndrew",
+			"d": "Jennifer Aniston"
+		},
+		"19":
+		{
+			"id": "19",
+			"type": "choice",
+			"question": "How many figures are there in a completed Sudoku puzzle?",
+			"a": "49",
+			"b": "64",
+			"c": "81",
+			"d": "100"
+		},
+		"20":
+		{
+			"id": "20",
+			"type": "estimate",
+			"question": "How many humans are born approximately per hour?"
+		},
+		"21":
+		{
+			"id": "21",
+			"type": "choice",
+			"question": "Which Shakespeare character is known as the 'Moor of Venice'?",
+			"a": "Hamlet",
+			"b": "Julius Caesar",
+			"c": "King Lear",
+			"d": "Othello"
+		},
+		"22":
+		{
+			"id": "22",
+			"type": "choice",
+			"question": "Who has written the ballad "Erlkönig"?",
+			"a": "Johann Wolfgang von Goethe",
+			"b": "Joseph von Eichendorff",
+			"c": "E.T.A. Hoffmann",
+			"d": "Ludwik Richter"
+		},
+		"23":
+		{
+			"id": "23",
+			"type": "choice",
+			"question": "How many teeth does humans have in total?",
+			"a": "36",
+			"b": "32",
+			"c": "24",
+			"d": "44"
+		},
+		"24":
+		{
+			"id": "24",
+			"type": "choice",
+			"question": "Dipsomania is an uncontrollable craving for what?",
+			"a": "Alcohol",
+			"b": "Dipping sauces",
+			"c": "Sea bathing",
+			"d": "The green Teletubby"
+		},
+		"25":
+		{
+			"id": "25",
+			"type": "estimate",
+			"question": "How many approved cat breeds exists?"
 		}
 	},
 	"answers": 
 	{
 		"0": "b",
 		"1": "a",
-		"3": "171.7"
+		"3": "171.7",
+		"4": "a",
+		"5": "40000",
+		"6": "b",
+		"7": "d",
+		"8": "263",
+		"9": "a",
+		"10": "d",
+		"11": "b",
+		"12": "c",
+		"13": "d",
+		"14": "a",
+		"15": "b",
+		"16": "a",
+		"17": "b",
+		"18": "a",
+		"19": "c",
+		"20": "15000",
+		"21": "d",
+		"22": "a",
+		"23": "b",
+		"24": "a",
+		"25": "40"
 	}
 }
+
