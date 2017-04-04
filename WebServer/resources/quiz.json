@@ -199,7 +199,7 @@
 		{
 			"id": "22",
 			"type": "choice",
-			"question": "Who has written the ballad "Erlkönig"?",
+			"question": "Who has written the ballad 'Erlkönig'?",
 			"a": "Johann Wolfgang von Goethe",
 			"b": "Joseph von Eichendorff",
 			"c": "E.T.A. Hoffmann",
