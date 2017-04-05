@@ -1,7 +1,7 @@
 {
-	"questions": 
+	"questions":
 	{
-		"0": 
+		"0":
 		{
 			"id": "0",
 			"type": "choice",
@@ -11,21 +11,21 @@
 			"c": "Juvenile Sea Orchid Narwhal",
 			"d": "John Snow Order Nation"
 		},
-		"1": 
+		"1":
 		{
 			"id": "1",
 			"type": "choice",
-			"question": "Which number comes after 6?",
-			"a": "7",
-			"b": "5",
-			"c": "6",
-			"d": "42"
+			"question": "How many Platonic solids are there?",
+			"a": "5",
+			"b": "7",
+			"c": "666",
+			"d": "2"
 		},
-		"3": 
+		"3":
 		{
 			"id": "3",
 			"type": "estimate",
-			"question": "Please answer 171.7"
+			"question": "What is the gravitational acceleration on earth in m/s²?"
 		},
 		"4":
 		{
@@ -230,13 +230,45 @@
 			"id": "25",
 			"type": "estimate",
 			"question": "How many approved cat breeds exists?"
+		},
+		"26":
+		{
+			"id": "26",
+			"type": "choice",
+			"question": "Who directed Alien?",
+			"a": "Dietmar Rammerstorfer",
+			"b": "Ridley Scott",
+			"c": "Steven Spielberg",
+			"d": "David Cronenberg"
+		},
+		"27":
+		{
+			"id": "27",
+			"type": "estimate",
+			"question": "How much is the meaning of life?"
+		},
+		"28":
+		{
+			"id": "28",
+			"type": "choice",
+			"question": "What is the largest food company measured by revenue?",
+			"a": "Tesla",
+			"b": "Unilever",
+			"c": "PepsiCo",
+			"d": "Nestle"
+		},
+		"29":
+		{
+			"id": "29",
+			"type": "estimate",
+			"question": "What is the percentage of nitrogen in the earth atmosphere?"
 		}
 	},
-	"answers": 
+	"answers":
 	{
 		"0": "b",
 		"1": "a",
-		"3": "171.7",
+		"3": "9.81",
 		"4": "a",
 		"5": "40000",
 		"6": "b",
@@ -258,7 +290,10 @@
 		"22": "a",
 		"23": "b",
 		"24": "a",
-		"25": "40"
+		"25": "40",
+		"26": "b",
+		"27": "42",
+		"28": "d",
+		"29": "78"
 	}
 }
-
