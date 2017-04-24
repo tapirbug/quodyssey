@@ -1,13 +1,13 @@
 'use strict'
 const express = require('express');
-const Quiz = require('./resources/quiz.json');
+const quiz = require('./resources/quiz.json');
 const router = express.Router();
 
-let games = {};
+const games = {};
 
 router.post('/start', function(req, res, next) {
 	let gameId = req.body.gameId;
-	if (gameId == -1) {
+	if (gameId == undefined) {
 		gameId = Math.floor(Math.random() * 9000 + 1000);
 		while (games[gameId] != undefined) gameId = Math.floor(Math.random() * 9000 + 1000);
 	}
@@ -31,10 +31,10 @@ router.post('/ask', function(req, res, next) {
 	if (games[gameId] == undefined) return res.json({'success': false, 'error': 'Game not found.'});
 
 	games[gameId].roundId++;
-	let keys = Object.keys(Quiz.questions);
+	let keys = Object.keys(quiz.questions);
 	let randomizedQuestion = keys[Math.floor(Math.random() * keys.length)];
 
-	let type = Quiz.questions[randomizedQuestion].type;
+	let type = quiz.questions[randomizedQuestion].type;
 	let date = new Date();
 	date.setSeconds(date.getSeconds() + 20);
 	if (type == 'choice') {
@@ -46,13 +46,13 @@ router.post('/ask', function(req, res, next) {
 });
 
 router.get('/getQ/:gameId', function(req, res, next) {
-	let gameId = req.param.gameId;
+	let gameId = req.params.gameId;
 	if (games[gameId] == undefined) return res.json({'success': false, 'error': 'Game not found.'});
 	let game = games[gameId];
 	let round = game.rounds[game.roundId];
 	if (round == undefined || round.end < new Date()) return res.json({'success': false, 'error': 'No question available.'});
 	let remainingTime = round.end.getTime() - new Date().getTime();
-	return res.json({'success': true, 'round': game.roundId, 'question': Quiz.questions[round.question], 'end': remainingTime}); 
+	return res.json({'success': true, 'round': game.roundId, 'question': quiz.questions[round.question], 'end': remainingTime}); 
 });
 
 router.post('/answer', function(req, res, next) {
@@ -66,13 +66,14 @@ router.post('/answer', function(req, res, next) {
 	let game = games[gameId];
 	let round = game.rounds[roundId];
 	if (round.end < new Date()) return res.json({'success': false, 'error': 'Round over.'});
-	let type = Quiz.questions[round.question].type;
+	let type = quiz.questions[round.question].type;
 	if (games[gameId].users[username].round >= roundId) return res.json({'success': false, 'error': 'User has already answered.'});
+	if (type == 'estimate' && isNaN(answer)) return res.json({'success': false, 'error': 'Answer was not a number'});
 	games[gameId].users[username].round = roundId;
 	round.participants++;
 	if (type == 'choice') {
 		round[answer]++;
-		if (answer == Quiz.answers[round.question]) {
+		if (answer == quiz.answers[round.question]) {
 			round.correct++;
 			games[gameId].users[username].score++;
 		}
@@ -80,7 +81,7 @@ router.post('/answer', function(req, res, next) {
 	} else if (type == 'estimate') {
 		if (round.min == undefined || answer < round.min) round.min = answer;
 		if (round.max == undefined || answer > round.max) round.max = answer;
-		if (Math.abs(Quiz.answers[round.question] - answer) < Quiz.answers[round.question] * 0.1) {	
+		if (Math.abs(quiz.answers[round.question] - answer) < quiz.answers[round.question] * 0.1) {	
 			round.correct++;
 			games[gameId].users[username].score++;
 		}
@@ -89,14 +90,14 @@ router.post('/answer', function(req, res, next) {
 });
 
 router.get('/resultQ/:gameId/:roundId', function(req, res, next) {
-	let gameId = req.param.gameId;
-	let roundId = req.param.roundId;
+	let gameId = req.params.gameId;
+	let roundId = req.params.roundId;
 	if (games[gameId] == undefined) return res.json({'success': false, 'error': 'Game not found.'});
 	if (games[gameId].rounds[roundId] == undefined) return res.json({'success': false, 'error': 'Round not found.'});
 	let round = games[gameId].rounds[roundId];
 	if (round.end > new Date()) return res.json({'success': false, 'error': 'Round not over.'});
-	let type = Quiz.questions[round.question].type;
-	let answer = Quiz.answers[round.question];
+	let type = quiz.questions[round.question].type;
+	let answer = quiz.answers[round.question];
 	return res.json({'success': true, 'answer': answer, 'result': round});
 });
 
