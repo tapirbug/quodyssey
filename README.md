@@ -1,4 +1,4 @@
-# quodserv
+# quodyssey
 
 # Setup
 Either run `InstallServer.sh` or run `npm install` from the command line.
