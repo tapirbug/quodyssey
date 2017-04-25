@@ -1,8 +1,11 @@
 'use strict'
 const express = require('express');
-const quiz = require('./resources/quiz.json');
+const editDistance = require('./editDistance.js');
+const quiz = require('../resources/quiz.json');
 const router = express.Router();
 
+const estimationRange = 0.1;
+const maxEditDistance = 2;
 const games = {};
 
 router.post('/start', function(req, res, next) {
@@ -68,7 +71,9 @@ router.post('/answer', function(req, res, next) {
 	if (round.end < new Date()) return res.json({'success': false, 'error': 'Round over.'});
 	let type = quiz.questions[round.question].type;
 	if (games[gameId].users[username].round >= roundId) return res.json({'success': false, 'error': 'User has already answered.'});
-	if (type == 'estimate' && isNaN(answer)) return res.json({'success': false, 'error': 'Answer was not a number'});
+	if (type == 'choice' && !['a', 'b', 'c', 'd'].includes(answer)) return res.json({'success': false, 'error': 'Wrong answer format.'});
+	if (type == 'estimate' && isNaN(answer)) return res.json({'success': false, 'error': 'Answer was not a number.'});
+	
 	games[gameId].users[username].round = roundId;
 	round.participants++;
 	if (type == 'choice') {
@@ -81,7 +86,13 @@ router.post('/answer', function(req, res, next) {
 	} else if (type == 'estimate') {
 		if (round.min == undefined || answer < round.min) round.min = answer;
 		if (round.max == undefined || answer > round.max) round.max = answer;
-		if (Math.abs(quiz.answers[round.question] - answer) < quiz.answers[round.question] * 0.1) {	
+		if (Math.abs(quiz.answers[round.question] - answer) < quiz.answers[round.question] * estimationRange) {	
+			round.correct++;
+			games[gameId].users[username].score++;
+		}
+		return res.json({'success': true});
+	} else if (type == 'open') {
+		if (editDistance(quiz.answers[round.question], answer, maxEditDistance)) {	
 			round.correct++;
 			games[gameId].users[username].score++;
 		}

@@ -57,7 +57,7 @@
 		{
 			"id": "7",
 			"type": "choice",
-			"question": "University Hagenberg: In which year was the foundation?",
+			"question": "In which year was the University in Hagenberg founded?",
 			"a": "1990",
 			"b": "1996",
 			"c": "1989",
@@ -67,7 +67,7 @@
 		{
 			"id": "8",
 			"type": "estimate",
-			"question": "How many partner-colleges are working with FH Upper Austria?"
+			"question": "How many partner universities are working with FH Upper Austria?"
 		},
 		"9":
 		{
@@ -83,7 +83,7 @@
 		{
 			"id": "10",
 			"type": "choice",
-			"question": "For which of the following disciplines is Nobel Prize awarded?",
+			"question": "For which of the following disciplines is the Nobel Prize awarded?",
 			"a": "Physics and Chemistry",
 			"b": "Physiology or Medicine",
 			"c": "Literature, Peace and Economics",
@@ -163,7 +163,7 @@
 		{
 			"id": "18",
 			"type": "choice",
-			"question": "Who plays Lara Croft in the Tomb Raider series of films?",
+			"question": "Who plays Lara Croft in the Tomb Raider movies?",
 			"a": "Angelina Jolie",
 			"b": "Minnie Driver",
 			"c": "Nell McAndrew",

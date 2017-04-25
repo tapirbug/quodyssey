@@ -4,7 +4,7 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const game = require('./game');
+const gameController = require('./source/gameController');
 const app = express();
 
 app.set('views', path.join(__dirname, 'views'));
@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/', game);
+app.use('/', gameController);
 
 app.use(function(req, res, next) {
   let err = new Error('Not Found');
