@@ -4,7 +4,7 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const gameController = require('./source/gameController');
+const gameController = require(path.join(__dirname, 'source', 'gameController'));
 const app = express();
 
 app.set('views', path.join(__dirname, 'views'));

@@ -10,13 +10,14 @@ const games = {};
 
 router.post('/start', function(req, res, next) {
 	let gameId = req.body.gameId;
+	let cssUrl = req.body.cssUrl || req.protocol + '://' + req.get('host') + '/default.css';
 	if (gameId == undefined) {
 		gameId = Math.floor(Math.random() * 9000 + 1000);
 		while (games[gameId] != undefined) gameId = Math.floor(Math.random() * 9000 + 1000);
 	}
 	if (gameId < 1000 || gameId > 9999) return res.json({'success': false, 'error': 'Wrong ID format.'});
 	if (games[gameId] != undefined) return res.json({'success': false, 'error': 'ID unavailable.'});
-	games[gameId] = {'roundId': 0, 'rounds': [], 'users': {}};
+	games[gameId] = {'roundId': 0, 'rounds': [], 'users': {}, 'cssUrl': cssUrl};
 	return res.json({'success': true, 'gameId': gameId}); 
 });
 
@@ -26,7 +27,7 @@ router.post('/join', function(req, res, next) {
 	if (games[gameId] == undefined) return res.json({'success': false, 'error': 'Game not found.'});
 	if (games[gameId].users[username] != undefined) return res.json({'success': false, 'error': 'Name unavailable.'});
 	games[gameId].users[username] = {'score': 0, 'round': 0};
-	return res.json({'success': true});
+	return res.json({'success': true, 'cssUrl': games[gameId].cssUrl});
 });
 
 router.post('/ask', function(req, res, next) {
