@@ -1,14 +1,11 @@
-'use strict'
-const express = require('express');
 const editDistance = require('./editDistance.js');
 const quiz = require('../resources/quiz.json');
-const router = express.Router();
 
 const estimationRange = 0.1;
 const maxEditDistance = 2;
 const games = {};
 
-router.post('/start', function(req, res, next) {
+function start(req, res) {
 	let gameId = req.body.gameId;
 	let cssUrl = req.body.cssUrl || req.protocol + '://' + req.get('host') + '/default.css';
 	if (gameId == undefined) {
@@ -19,18 +16,18 @@ router.post('/start', function(req, res, next) {
 	if (games[gameId] != undefined) return res.json({'success': false, 'error': 'ID unavailable.'});
 	games[gameId] = {'roundId': 0, 'rounds': [], 'users': {}, 'cssUrl': cssUrl};
 	return res.json({'success': true, 'gameId': gameId}); 
-});
+};
 
-router.post('/join', function(req, res, next) {
+function join(req, res) {
 	let gameId = req.body.gameId;
 	let username = req.body.username;
 	if (games[gameId] == undefined) return res.json({'success': false, 'error': 'Game not found.'});
 	if (games[gameId].users[username] != undefined) return res.json({'success': false, 'error': 'Name unavailable.'});
 	games[gameId].users[username] = {'score': 0, 'round': 0};
 	return res.json({'success': true, 'cssUrl': games[gameId].cssUrl});
-});
+};
 
-router.post('/ask', function(req, res, next) {
+function ask(req, res) {
 	let gameId = req.body.gameId;
 	if (games[gameId] == undefined) return res.json({'success': false, 'error': 'Game not found.'});
 
@@ -47,9 +44,9 @@ router.post('/ask', function(req, res, next) {
 		games[gameId].rounds[games[gameId].roundId] = {'question': randomizedQuestion, 'participants': 0, 'correct': 0, 'max': undefined, 'min': undefined, 'end': date};
 	}
 	return res.json({'success': true, 'round': games[gameId].roundId, 'question': randomizedQuestion});
-});
+};
 
-router.get('/getQ/:gameId', function(req, res, next) {
+function getQuestion(req, res) {
 	let gameId = req.params.gameId;
 	if (games[gameId] == undefined) return res.json({'success': false, 'error': 'Game not found.'});
 	let game = games[gameId];
@@ -57,9 +54,9 @@ router.get('/getQ/:gameId', function(req, res, next) {
 	if (round == undefined || round.end < new Date()) return res.json({'success': false, 'error': 'No question available.'});
 	let remainingTime = round.end.getTime() - new Date().getTime();
 	return res.json({'success': true, 'round': game.roundId, 'question': quiz.questions[round.question], 'end': remainingTime}); 
-});
+};
 
-router.post('/answer', function(req, res, next) {
+function answer(req, res) {
 	let gameId = req.body.gameId;
 	let roundId = req.body.roundId;
 	let answer = req.body.answer;
@@ -99,9 +96,9 @@ router.post('/answer', function(req, res, next) {
 		}
 		return res.json({'success': true});
 	}
-});
+};
 
-router.get('/resultQ/:gameId/:roundId', function(req, res, next) {
+function resultQuiz(req, res) {
 	let gameId = req.params.gameId;
 	let roundId = req.params.roundId;
 	if (games[gameId] == undefined) return res.json({'success': false, 'error': 'Game not found.'});
@@ -111,9 +108,9 @@ router.get('/resultQ/:gameId/:roundId', function(req, res, next) {
 	let type = quiz.questions[round.question].type;
 	let answer = quiz.answers[round.question];
 	return res.json({'success': true, 'answer': answer, 'result': round});
-});
+};
 
-router.get('/resultA/:gameId/:roundId', function(req, res, next) {
+function resultAction(req, res) {
 	let gameId = req.params.gameId;
 	let roundId = req.params.roundId;
 	if (games[gameId] == undefined) return res.json({'success': false, 'error': 'Game not found.'});
@@ -121,9 +118,9 @@ router.get('/resultA/:gameId/:roundId', function(req, res, next) {
 	let round = games[gameId].rounds[roundId];
 	if (round.end > new Date()) return res.json({'success': false, 'error': 'Round not over.'});
 	return res.json({'success': true, 'result': round.correct == 0 ? 0 : round.correct / round.participants});
-});
+};
 
-router.get('/scoreboard/:gameId', function(req, res, next) {
+function scoreboard(req, res) {
 	let gameId = req.params.gameId;
 	if (games[gameId] == undefined) return res.json({'success': false, 'error': 'Game not found.'});
 	let users = games[gameId].users;
@@ -132,13 +129,23 @@ router.get('/scoreboard/:gameId', function(req, res, next) {
 		scoreboard[key] = users[key].score;
 	};
 	return res.json({'success': true, 'scoreboard': scoreboard});
-});
+};
 
-router.post('/end', function(req, res, next) {
+function end(req, res) {
 	let gameId = req.body.gameId;
 	if (games[gameId] == undefined) return res.json({'success': false, 'error': 'Game not found.'});
 	games[gameId] = undefined;
 	return res.json({'success': true});
-});
+};
 
-module.exports = router;
+module.exports = {
+    start,
+    join,
+    ask,
+    getQuestion,
+    answer,
+    resultQuiz,
+    resultAction,
+    scoreboard,
+    end
+};
