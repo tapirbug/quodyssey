@@ -10,12 +10,12 @@ function editDistanceRecursion(correct, answer, remainder) {
         let rep = 1 + editDistanceRecursion(correct.slice(1), answer.slice(1), remainder - 1);
         return Math.min(del, ins, rep);
     }
-    return editDistanceRecursion(correct.slice(1), answer.slice(1), remainder);    
+    return editDistanceRecursion(correct.slice(1), answer.slice(1), remainder);
 }
 
 module.exports = (correct, answer, maxEditDistance = 0) => {
     correct = correct.trim().toLowerCase();
     answer = answer.trim().toLowerCase();
-	const kd = editDistanceRecursion(correct, answer, maxEditDistance);
+    const kd = editDistanceRecursion(correct, answer, maxEditDistance);
     return kd <= maxEditDistance;
 };
