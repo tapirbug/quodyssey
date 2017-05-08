@@ -6,7 +6,7 @@ const maxEditDistance = 2;
 const games = {};
 
 function start(req, res) {
-    const gameId = req.body.gameId;
+    let gameId = req.body.gameId;
     const cssUrl = req.body.cssUrl || req.protocol + '://' + req.get('host') + '/default.css';
     if (gameId == undefined) {
         gameId = Math.floor(Math.random() * 9000 + 1000);
