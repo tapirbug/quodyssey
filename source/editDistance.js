@@ -8,8 +8,8 @@ function editDistance(correct, answer, maxEditDistance = 0) {
 }
 
 function editDistanceRecursion(correct, answer, remainder) {
-    if (answer == "") return correct.length;
-    if (correct == "") return answer.length;
+    if (answer == '') return correct.length;
+    if (correct == '') return answer.length;
     if (answer.charAt(0) != correct.charAt(0)) {
         if (remainder < 0) return Infinity;
         let del = 1 + editDistanceRecursion(correct.slice(1), answer, remainder - 1);
