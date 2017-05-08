@@ -1,12 +1,5 @@
 'use strict'
 
-function editDistance(correct, answer, maxEditDistance = 0) {
-    correct = correct.trim().toLowerCase();
-    answer = answer.trim().toLowerCase();
-	const kd = editDistanceRecursion(correct, answer, maxEditDistance);
-    return kd <= maxEditDistance;
-}
-
 function editDistanceRecursion(correct, answer, remainder) {
     if (answer == '') return correct.length;
     if (correct == '') return answer.length;
@@ -20,4 +13,9 @@ function editDistanceRecursion(correct, answer, remainder) {
     return editDistanceRecursion(correct.slice(1), answer.slice(1), remainder);    
 }
 
-module.exports = editDistance;
+module.exports = (correct, answer, maxEditDistance = 0) => {
+    correct = correct.trim().toLowerCase();
+    answer = answer.trim().toLowerCase();
+	const kd = editDistanceRecursion(correct, answer, maxEditDistance);
+    return kd <= maxEditDistance;
+};
