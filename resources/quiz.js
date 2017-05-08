@@ -18,11 +18,6 @@ module.exports = [
         d: 2
     },
     {
-        type: 'estimate',
-        question: 'What is the gravitational acceleration on earth in m/s²?',
-        answer: 9.81
-    },
-    {
         type: 'choice',
         question: 'What does CSS stand for?',
         answer: 'a',
@@ -30,11 +25,6 @@ module.exports = [
         b: 'Controverse Script Style',
         c: 'Converting Section Sheet',
         d: 'Comfortable Selfie Stick'
-    },
-    {
-        type: 'estimate',
-        question: 'How many worker-bees are in a beehive in summer?',
-        answer: 40000
     },
     {
         type: 'choice',
@@ -53,11 +43,6 @@ module.exports = [
         b: '1996',
         c: '1989',
         d: '1993'
-    },
-    {
-        type: 'estimate',
-        question: 'How many partner universities are working with FH Upper Austria?',
-        answer: 263
     },
     {
         type: 'choice',
@@ -159,11 +144,6 @@ module.exports = [
         d: '100'
     },
     {
-        type: 'estimate',
-        question: 'How many humans are born approximately per hour?',
-        answer: 15000
-    },
-    {
         type: 'choice',
         question: 'Which Shakespeare character is known as the \'Moor of Venice\'?',
         answer: 'd',
@@ -200,11 +180,6 @@ module.exports = [
         d: 'The green Teletubby'
     },
     {
-        type: 'estimate',
-        question: 'How many approved cat breeds exists?',
-        answer: 40
-    },
-    {
         type: 'choice',
         question: 'Who directed Alien?',
         answer: 'b',
@@ -212,11 +187,6 @@ module.exports = [
         b: 'Ridley Scott',
         c: 'Steven Spielberg',
         d: 'David Cronenberg'
-    },
-    {
-        type: 'estimate',
-        question: 'How much is the meaning of life?',
-        answer: 42
     },
     {
         type: 'choice',
@@ -229,8 +199,38 @@ module.exports = [
     },
     {
         type: 'estimate',
+        question: 'How many approved cat breeds exists?',
+        answer: 40
+    },
+    {
+        type: 'estimate',
+        question: 'How much is the meaning of life?',
+        answer: 42
+    },
+    {
+        type: 'estimate',
         question: 'What is the percentage of nitrogen in the earth atmosphere?',
         answer: 78
+    },
+    {
+        type: 'estimate',
+        question: 'How many humans are born approximately per hour?',
+        answer: 15000
+    },
+    {
+        type: 'estimate',
+        question: 'What is the gravitational acceleration on earth in m/s²?',
+        answer: 9.81
+    },
+    {
+        type: 'estimate',
+        question: 'How many partner universities are working with FH Upper Austria?',
+        answer: 263
+    },
+    {
+        type: 'estimate',
+        question: 'How many worker-bees are in a beehive in summer?',
+        answer: 40000
     },
     {
         type: 'open',
