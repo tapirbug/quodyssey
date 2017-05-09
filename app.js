@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -31,7 +32,8 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
-app.listen(3333);
-console.log('Server is now listening on port 3333.')
+const port = process.env.QUOVADIS_PORT || 3333
+app.listen(port);
+console.log(`Server is now listening on port ${port}.`)
 
 module.exports = app;
