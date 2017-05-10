@@ -1,3 +1,6 @@
+# Compiled javascript bundles
+public/dist
+
 # Logs
 logs
 *.log
@@ -28,3 +31,6 @@ node_modules
 
 # Debug log from npm
 npm-debug.log
+
+# Mac Indexing files
+.DS_Store

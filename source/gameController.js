@@ -29,6 +29,7 @@ function join(req, res) {
 
 function ask(req, res) {
     const gameId = req.body.gameId;
+    console.log(gameId)
     if (games[gameId] == undefined) return res.json({ 'success': false, 'error': 'Game not found.' });
 
     games[gameId].roundId++;

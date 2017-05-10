@@ -1,10 +1,39 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Quodyssey</title>
-    </head>
-    <body>
-        <h1>THIS IS WHERE YOUR CONTENT SHOULD BE</h1>
-    </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Join Game</title>
+    <link rel="stylesheet" href="question.css">
+
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+	<div class="border">
+        <div class="centered-join">
+        	<span class="menue-prompt">Enter Room-Code</span> <br />
+            <input class="input-blue" type="text" id="input-roomcode" placeholder="XXXX" maxlength="4" required />  <br /> <br />
+            <span class="menue-prompt">Enter Username</span> <br />
+            <input class="input-blue" type="text" id="username" placeholder="Username" maxlength="15" required />
+        </div>
+        <div id="bottom-left-arrow">
+        	<a href="startmenue.html">
+            	<img class="img-responsive arrow-blue" src="resource/arrow_blue.png" width="50" height="50" style="transform: scale(-1, 1);" />
+            </a>
+        </div>
+        <div id="bottom-right-arrow">
+            <a href="#">
+            	<img class="img-responsive arrow-blue" src="resource/arrow_blue.png" width="50" height="50" />
+            </a>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="dist/joingame.bundle.js"></script>
+
+</body>
 </html>
