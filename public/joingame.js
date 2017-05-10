@@ -27,7 +27,6 @@ function join() {
   quiz.join(username).then(function() {
     localStorage.setItem('roomcode', room)
     localStorage.setItem('username', username)
-    console.log(`${username} just joined`)
     window.location = 'quizplayer.html'
   })
 }

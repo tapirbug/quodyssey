@@ -10,6 +10,11 @@ module.exports = function (hostname, port, gameID, username) {
 
     const baseUrl = (hostname && port) ? `http://${hostname}:${port}` : ("http://"+window.location.host)
 
+    const customStyle = localStorage.getItem('quodyssey-style-url')
+    if(customStyle) {
+      changeCss(customStyle)
+    }
+
     return {
         start() {
             if (!gameID) {
@@ -26,6 +31,7 @@ module.exports = function (hostname, port, gameID, username) {
           return post('join', {gameId: gameID, username: newUsername}).then(function(res) {
             if(res.success) {
               username = newUsername
+              changeCss(res.cssUrl)
               return res.success
             } else {
               return Promise.reject(`Join failed: ${JSON.stringify(res)}`)
@@ -102,6 +108,25 @@ module.exports = function (hostname, port, gameID, username) {
         },
 
         getCurrentQuestionRemainingTime: currentQuestionRemainingTime,
+    }
+
+    function changeCss(url) {
+      const cssId = "quodyssey-custom-style"
+
+      let link = document.querySelector(`#${cssId}`)
+
+      if(!link) {
+        link  = document.createElement('link')
+        link.id   = cssId
+        link.rel  = 'stylesheet'
+        link.type = 'text/css'
+        link.media = 'all'
+        document.querySelector('head').appendChild(link)
+      }
+
+      link.href = url
+
+      localStorage.setItem('quodyssey-style-url', url)
     }
 
     function answerMultipleChoice(answerIdx) {
