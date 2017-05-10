@@ -7,8 +7,8 @@ const quodyssey = require('./quodyssey')
 const ui = require('./ui')
 const gameID = localStorage.getItem('roomcode')
 const username = localStorage.getItem('username')
-const hostname = 'localhost'
-const port = 3333
+const hostname = false
+const port = false
 const quiz = quodyssey(hostname, port, gameID, username)
 
 connectQuiz()

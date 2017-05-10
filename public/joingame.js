@@ -2,8 +2,8 @@ const roomInput = document.querySelector('#input-roomcode')
 const usernameInput = document.querySelector('#username')
 
 const quodyssey = require('./quodyssey')
-const hostname = 'localhost'
-const port = 3333
+const hostname = false
+const port = false
 
 wireEvents();
 

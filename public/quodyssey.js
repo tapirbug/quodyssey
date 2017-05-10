@@ -8,6 +8,8 @@ module.exports = function (hostname, port, gameID, username) {
     let currentQuestion
     let currentQuestionPoll
 
+    const baseUrl = (hostname && port) ? `http://${hostname}:${port}` : ("http://"+window.location.host)
+
     return {
         start() {
             if (!gameID) {
@@ -250,13 +252,13 @@ module.exports = function (hostname, port, gameID, username) {
     }
 
     function get(path) {
-        return requestPromise.get(`http://${hostname}:${port}/${path}`).then(function (res) {
+        return requestPromise.get(`${baseUrl}/${path}`).then(function (res) {
             return res.data
         })
     }
 
     function post(path, data) {
-        return requestPromise.post(`http://${hostname}:${port}/${path}`, data).then(function (res) {
+        return requestPromise.post(`${baseUrl}/${path}`, data).then(function (res) {
             return res.data
         })
     }
