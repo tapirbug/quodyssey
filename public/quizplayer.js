@@ -1,20 +1,40 @@
-//
-// Entry point for question terminal logic
-//
+const roomInput = document.querySelector('#input-roomcode')
+const usernameInput = document.querySelector('#username')
 
+const ui = require('./ui')
 const path = require('path')
 const quodyssey = require('./quodyssey')
-const ui = require('./ui')
-const gameID = localStorage.getItem('roomcode')
-const username = localStorage.getItem('username')
 const hostname = false
 const port = false
-const quiz = quodyssey(hostname, port, gameID, username)
 
-connectQuiz()
+let quiz
+let gameID
+let username
 
-function initialize () {
-  connectQuiz()
+wireEvents();
+
+function wireEvents() {
+  document.querySelector('#bottom-right-arrow > a').addEventListener(
+    'click',
+    function (evt) {
+      evt.preventDefault();
+      if(roomInput.value && usernameInput.value) {
+        join();
+      }
+    }
+  )
+}
+
+function join() {
+  gameID = roomInput.value
+  username = usernameInput.value
+
+  quiz = quodyssey(hostname, port, gameID)
+  quiz.join(username).then(function() {
+    document.body.classList.remove('is-join')
+    document.body.classList.add('is-play')
+    connectQuiz()
+  })
 }
 
 function connectQuiz () {

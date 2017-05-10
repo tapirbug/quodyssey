@@ -1,39 +1,88 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Join Game</title>
-    <link rel="stylesheet" href="question.css">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Join Game</title>
+  <link rel="stylesheet" href="question.css">
 
-    <!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="is-join">
 
-	<div class="border">
-        <div class="centered-join">
-        	<span class="menue-prompt">Enter Room-Code</span> <br />
-            <input class="input-blue" type="text" id="input-roomcode" placeholder="XXXX" maxlength="4" required />  <br /> <br />
-            <span class="menue-prompt">Enter Username</span> <br />
-            <input class="input-blue" type="text" id="username" placeholder="Username" maxlength="15" required />
-        </div>
-        <div id="bottom-left-arrow">
-        	<a href="startmenue.html">
-            	<img class="img-responsive arrow-blue" src="resource/arrow_blue.png" width="50" height="50" style="transform: scale(-1, 1);" />
-            </a>
-        </div>
-        <div id="bottom-right-arrow">
-            <a href="#">
-            	<img class="img-responsive arrow-blue" src="resource/arrow_blue.png" width="50" height="50" />
-            </a>
-        </div>
+  <div class="border screen-join">
+    <div class="centered-join">
+      <span class="menue-prompt">Enter Room-Code</span> <br />
+      <input class="input-blue" type="text" id="input-roomcode" placeholder="XXXX" maxlength="4" required />  <br /> <br />
+      <span class="menue-prompt">Enter Username</span> <br />
+      <input class="input-blue" type="text" id="username" placeholder="Username" maxlength="15" required />
+    </div>
+    <div id="bottom-left-arrow">
+      <a href="startmenue.html">
+        <img class="img-responsive arrow-blue" src="resource/arrow_blue.png" width="50" height="50" style="transform: scale(-1, 1);" />
+      </a>
+    </div>
+    <div id="bottom-right-arrow">
+      <a href="#">
+        <img class="img-responsive arrow-blue" src="resource/arrow_blue.png" width="50" height="50" />
+      </a>
+    </div>
+  </div>
+
+  <div class="border screen-play">
+    <div id="roomcode">
+      Room Code: <span id="roomcode-text">XXXX</span>
     </div>
 
-    <script type="text/javascript" src="dist/joingame.bundle.js"></script>
+    <article id="question" class="question is-waiting">
+
+      <div class="msg-awating-round centered">
+        <span class="lobby-header">Worked!</span> <br />
+        <span class="lobby-text">Waiting for next round...</span>
+      </div>
+
+      <section class="question-prompt">
+        <div id="question-prompt-text" class="question-prompt-text">?</div>
+      </section>
+
+      <section class="question-answers">
+        <div class="question-answers-choice">
+          <button id="question-answer-a" name="question-answer-a" class="question-answer-choice" type="button">A</button>
+          <button id="question-answer-b" name="question-answer-b" class="question-answer-choice" type="button">B</button>
+          <button id="question-answer-c" name="question-answer-c" class="question-answer-choice" type="button">C</button>
+          <button id="question-answer-d" name="question-answer-d" class="question-answer-choice" type="button">D</button>
+        </div>
+
+        <div class="question-answers-estimate">
+          <input id="question-answer-estimate" name="question-answer-estimate" class="question-answer-estimate-input" type="number" value="0">
+          <button id="question-answer-estimate-confirm" type="button" name="button" class="question-answer-estimate-btn">
+            <span class="question-answer-estimate-btn-text-submit">Submit</span>
+            <span class="question-answer-estimate-btn-text-submitted">Submitted</span>
+            <span class="question-answer-estimate-btn-text-solution">, was <span class="question-answer-estimate-btn-text-solution-text">424242</span></span>
+          </button>
+        </div>
+
+        <div class="question-answers-open">
+          <input type="text" id="question-answer-open" name="question-answer-open" placeholder="Your answer…" value="" class="question-answer-estimate-input">
+          <button id="question-answer-open-confirm" type="button" name="button" class="question-answer-estimate-btn">Submit</button>
+        </div>
+      </section>
+
+
+      <div id="timer">
+        <span class="timer-content timer-number" id="timer_number">15</span>
+        <span class="timer-content timer-correct">Correct</span>
+        <span class="timer-content timer-wrong">Wrong</span>
+      </div>
+
+    </article>
+  </div>
+
+  <script type="text/javascript" src="dist/quizplayer.bundle.js"></script>
 
 </body>
 </html>

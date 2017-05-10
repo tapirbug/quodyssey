@@ -1,7 +1,6 @@
 module.exports = {
   context: __dirname,
   entry: {
-      joingame: "./joingame.js",
       quizplayer: "./quizplayer.js"
   },
   output: {
