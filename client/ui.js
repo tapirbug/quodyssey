@@ -32,6 +32,13 @@ const mod = {
   showQuestion (question) {
     const { type, prompt, options } = question
 
+    document.body.classList.remove('is-join')
+    document.body.classList.remove('is-stats-choice')
+    document.body.classList.remove('is-stats-estimate')
+    document.body.classList.remove('is-stats-open')
+    
+    document.body.classList.add('is-play')
+
     questionElem.classList.remove('is-waiting')
     timerElement.classList.remove('is-correct')
     timerElement.classList.remove('is-wrong')
@@ -135,18 +142,21 @@ function processOpenAnswer (answer) {
 }
 
 function showStatsChoice (data) {
-  questionElem.classList.remove('is-choice')
-  questionElem.classList.add('is-stats-choice')
+  console.log("Showing choice stats")
+  document.body.classList.remove('is-play')
+  document.body.classList.add('is-stats-choice')
 }
 
 function showStatsEstimate (data) {
-  questionElem.classList.remove('is-estimate')
-  questionElem.classList.add('is-stats-estimate')
+  console.log("Showing estimate stats")
+  document.body.classList.remove('is-play')
+  document.body.classList.add('is-stats-estimate')
 }
 
 function showStatsOpen (data) {
-  questionElem.classList.remove('is-open')
-  questionElem.classList.add('is-stats-open')
+  console.log("Showing open stats")
+  document.body.classList.remove('is-play')
+  document.body.classList.add('is-stats-open')
 }
 
 function showPrompt (type, prompt) {

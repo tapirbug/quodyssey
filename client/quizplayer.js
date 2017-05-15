@@ -31,8 +31,6 @@ function join() {
 
   quiz = quodyssey(hostname, port, gameID)
   quiz.join(username).then(function() {
-    document.body.classList.remove('is-join')
-    document.body.classList.add('is-play')
     connectQuiz()
   })
 }
