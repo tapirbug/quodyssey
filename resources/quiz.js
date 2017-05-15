@@ -236,5 +236,35 @@ module.exports = [
         type: 'open',
         question: 'What is the working title of this game?',
         answer: 'Quodyssey'
+    },
+    {
+        type: 'open',
+        question: 'Who is the new French President?',
+        answer: 'Emmanuel Macron'
+    },
+    {
+        type: 'open',
+        question: 'Who was the leading politician in favor of Brexit?',
+        answer: 'Nigel Farage'
+    },
+    {
+        type: 'open',
+        question: 'What\'s the name of the now already famous press secretary of the new president of the United States?',
+        answer: 'Sean Spicer'
+    },
+    {
+        type: 'open',
+        question: 'Who is the founder of Tesla and SpaceX?',
+        answer: 'Elon Musk'
+    },
+    {
+        type: 'open',
+        question: 'Who is the new French President?',
+        answer: 'Emmanuel Macron'
+    },
+    {
+        type: 'open',
+        question: 'Which company is currently the market leader in cloud services?',
+        answer: 'Amazon'
     }
 ];
