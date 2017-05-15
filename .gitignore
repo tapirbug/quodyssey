@@ -34,3 +34,6 @@ npm-debug.log
 
 # Mac Indexing files
 .DS_Store
+
+#client node modules
+client/node_modules
