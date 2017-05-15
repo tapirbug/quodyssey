@@ -3,7 +3,8 @@ const quizController = require('./quizController');
 
 const estimationRange = 0.1;
 const maxEditDistance = 2;
-const questionDuration = 20;
+const questionDuration = 15;
+const postQuestionDuration = 5;
 
 const openIds = [];
 for (let i = 1000; i <= 9999; i++) openIds.push(i);
@@ -33,11 +34,11 @@ function ask(req, res) {
     if (!games[gameId]) return res.json({ success: false, error: 'Game not found.' });
     if (games[gameId].roundId !== 0) {
         const remainingTime = games[gameId].rounds[games[gameId].roundId].end.getTime() - new Date().getTime();
-        if (remainingTime > 0) {
+        if (remainingTime > -postQuestionDuration * 1000) {
             setTimeout(() => {
                 games[gameId].queuedRounds--;
                 generateNewQuestion(gameId);
-            }, remainingTime + games[gameId].queuedRounds * questionDuration * 1000);
+            }, remainingTime + (games[gameId].queuedRounds * (questionDuration + postQuestionDuration) + postQuestionDuration) * 1000);
             games[gameId].queuedRounds++;
             return res.json({ success: true, queuePosition: games[gameId].queuedRounds });
         }
