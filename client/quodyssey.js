@@ -149,9 +149,18 @@ module.exports = function (hostname, port, gameID, username) {
                     const msLeft = currentQuestionRemainingTime()
                     setTimeout(function () {
                         get(`resultQ/${gameID}/${round}`).then(function (result) {
+                            console.log(JSON.stringify(result))
                             const correctAnswerLetter = result.answer
                             const correctAnswerIndex = answerLetters.indexOf(correctAnswerLetter)
-                            resolve({ success: (correctAnswerLetter === answerLetter), solution: correctAnswerIndex })
+
+                            const distribution = [
+                              result.result.a,
+                              result.result.b,
+                              result.result.c,
+                              result.result.d
+                            ]
+
+                            resolve({ success: (correctAnswerLetter === answerLetter), solution: correctAnswerIndex, distribution })
                         })
                     }, msLeft)
                 })
@@ -180,6 +189,7 @@ module.exports = function (hostname, port, gameID, username) {
                 const msLeft = currentQuestionRemainingTime()
                 setTimeout(function () {
                     get(`resultQ/${gameID}/${round}`).then(function (result) {
+                        console.log(JSON.stringify(result))
                         const exactVal = result.answer
                         // If less than 10% off, show as correct
                         const goodEnough = Math.abs(exactVal - estimateVal) < (exactVal * 0.1)
@@ -209,6 +219,7 @@ module.exports = function (hostname, port, gameID, username) {
                 const msLeft = currentQuestionRemainingTime()
                 setTimeout(function () {
                     get(`resultQ/${gameID}/${round}`).then(function (result) {
+                        console.log(JSON.stringify(result))
                         resolve(result)
                     })
                 }, Math.max(msLeft, 0))

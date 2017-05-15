@@ -6,6 +6,8 @@ let questionElem
 let questionPromptElem
 
 let multipleChoiceElements
+let multipleChoiceStatsAmountElems
+let multipleChoiceStatsAnswerElems
 
 let estimateInputElem
 let estimateConfirmElem
@@ -36,7 +38,7 @@ const mod = {
     document.body.classList.remove('is-stats-choice')
     document.body.classList.remove('is-stats-estimate')
     document.body.classList.remove('is-stats-open')
-    
+
     document.body.classList.add('is-play')
 
     questionElem.classList.remove('is-waiting')
@@ -85,6 +87,12 @@ function processMultipleChoiceAnswer (idx) {
       multipleChoiceElements.forEach(
         (el, idx) => el.classList.add((idx == result.solution) ? 'is-correct' : 'is-wrong')
       )
+      multipleChoiceStatsAnswerElems.forEach(
+        (el, idx) => el.classList.add((idx == result.solution) ? 'is-correct' : 'is-wrong')
+      )
+      multipleChoiceStatsAmountElems.forEach(
+        (el, idx) => el.classList.add((idx == result.solution) ? 'is-correct' : 'is-wrong')
+      )
       timerElement.classList.add(result.success ? 'is-correct' : 'is-wrong')
 
       window.setTimeout(function() {
@@ -131,6 +139,7 @@ function processOpenAnswer (answer) {
     openInputElem.classList.remove('is-pending')
     openConfirmElem.classList.remove('is-pending')
 
+    // FIXME this is always successful
     openInputElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
     openConfirmElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
     timerElement.classList.add(result.success ? 'is-correct' : 'is-wrong')
@@ -142,9 +151,29 @@ function processOpenAnswer (answer) {
 }
 
 function showStatsChoice (data) {
-  console.log("Showing choice stats")
   document.body.classList.remove('is-play')
   document.body.classList.add('is-stats-choice')
+
+  const amountElems = document.querySelectorAll('.screen-stats-choice-amount')
+  const answerElems = document.querySelectorAll('.screen-stats-choice-answer')
+  const correctElem = document.querySelector('.screen-stats-choice-correct')
+  const wrongElem = document.querySelector('.screen-stats-choice-wrong')
+
+  const amounts = data.distribution
+  const answers = [ 'A', 'B', 'C', 'D' ]
+
+  console.log(amounts)
+  console.log(amountElems)
+  amountElems.forEach((el, idx) => el.textContent = amounts[idx])
+  answerElems.forEach((el, idx) => el.textContent = answers[idx])
+
+  if(data.success) {
+    correctElem.style.display = 'block'
+    wrongElem.style.display = 'none'
+  } else {
+    correctElem.style.display = 'none'
+    wrongElem.style.display = 'block'
+  }
 }
 
 function showStatsEstimate (data) {
@@ -193,6 +222,16 @@ function showOptions (type, options) {
 
 function showMultipleChoiceOptions (options) {
   multipleChoiceElements.forEach((elem, idx) => {
+    elem.classList.remove('is-correct')
+    elem.classList.remove('is-wrong')
+    elem.classList.remove('is-picked')
+    elem.classList.remove('is-non-picked')
+
+    const optionText = options[idx]
+    elem.innerText =  optionText
+  })
+
+  multipleChoiceStatsAnswerElems.forEach((elem, idx) => {
     elem.classList.remove('is-correct')
     elem.classList.remove('is-wrong')
     elem.classList.remove('is-picked')
@@ -273,6 +312,8 @@ function obtainElements () {
 
   questionPromptElem = document.querySelector(questionPromptSel)
   multipleChoiceElements = multipleChoiceSels.map(sel => document.querySelector(sel))
+  multipleChoiceStatsAnswerElems = document.querySelectorAll('.screen-stats-choice-answer')
+  multipleChoiceStatsAmountElems = document.querySelectorAll('.screen-stats-choice-amount')
 
   estimateInputElem = document.querySelector(estimateInputSel)
   estimateConfirmElem = document.querySelector(estimateConfirmSel)
