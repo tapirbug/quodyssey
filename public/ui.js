@@ -18,6 +18,8 @@ let timerNumber
 
 let answeredLastShown = true
 
+const statsDelay = 1500
+
 // Publicly visible functions
 const mod = {
   processAnswer (answerObj) { return Promise.reject(new Error('No answer processing connected to UI')) },
@@ -44,7 +46,7 @@ const mod = {
 
   showRoomcode (roomcode) {
     document.querySelector('#roomcode-text').textContent = roomcode
-  },
+  }
 }
 
 obtainElements()
@@ -77,6 +79,10 @@ function processMultipleChoiceAnswer (idx) {
         (el, idx) => el.classList.add((idx == result.solution) ? 'is-correct' : 'is-wrong')
       )
       timerElement.classList.add(result.success ? 'is-correct' : 'is-wrong')
+
+      window.setTimeout(function() {
+        showStatsChoice(result)
+      }, statsDelay)
     })
 
   }
@@ -98,6 +104,10 @@ function processEstimateAnswer (estimateVal) {
       estimateInputElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
       estimateConfirmElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
       timerElement.classList.add(result.success ? 'is-correct' : 'is-wrong')
+
+      window.setTimeout(function() {
+        showStatsEstimate(result)
+      }, statsDelay)
     })
 
   }
@@ -117,7 +127,26 @@ function processOpenAnswer (answer) {
     openInputElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
     openConfirmElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
     timerElement.classList.add(result.success ? 'is-correct' : 'is-wrong')
+
+    window.setTimeout(function() {
+      showStatsOpen(result)
+    }, statsDelay)
   })
+}
+
+function showStatsChoice (data) {
+  questionElem.classList.remove('is-choice')
+  questionElem.classList.add('is-stats-choice')
+}
+
+function showStatsEstimate (data) {
+  questionElem.classList.remove('is-estimate')
+  questionElem.classList.add('is-stats-estimate')
+}
+
+function showStatsOpen (data) {
+  questionElem.classList.remove('is-open')
+  questionElem.classList.add('is-stats-open')
 }
 
 function showPrompt (type, prompt) {
