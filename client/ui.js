@@ -18,6 +18,8 @@ let timerNumber
 
 let answeredLastShown = true
 
+const statsDelay = 1500
+
 // Publicly visible functions
 const mod = {
   processAnswer (answerObj) { return Promise.reject(new Error('No answer processing connected to UI')) },
@@ -29,6 +31,13 @@ const mod = {
   //
   showQuestion (question) {
     const { type, prompt, options } = question
+
+    document.body.classList.remove('is-join')
+    document.body.classList.remove('is-stats-choice')
+    document.body.classList.remove('is-stats-estimate')
+    document.body.classList.remove('is-stats-open')
+    
+    document.body.classList.add('is-play')
 
     questionElem.classList.remove('is-waiting')
     timerElement.classList.remove('is-correct')
@@ -44,7 +53,7 @@ const mod = {
 
   showRoomcode (roomcode) {
     document.querySelector('#roomcode-text').textContent = roomcode
-  },
+  }
 }
 
 obtainElements()
@@ -77,6 +86,10 @@ function processMultipleChoiceAnswer (idx) {
         (el, idx) => el.classList.add((idx == result.solution) ? 'is-correct' : 'is-wrong')
       )
       timerElement.classList.add(result.success ? 'is-correct' : 'is-wrong')
+
+      window.setTimeout(function() {
+        showStatsChoice(result)
+      }, statsDelay)
     })
 
   }
@@ -98,6 +111,10 @@ function processEstimateAnswer (estimateVal) {
       estimateInputElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
       estimateConfirmElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
       timerElement.classList.add(result.success ? 'is-correct' : 'is-wrong')
+
+      window.setTimeout(function() {
+        showStatsEstimate(result)
+      }, statsDelay)
     })
 
   }
@@ -117,7 +134,29 @@ function processOpenAnswer (answer) {
     openInputElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
     openConfirmElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
     timerElement.classList.add(result.success ? 'is-correct' : 'is-wrong')
+
+    window.setTimeout(function() {
+      showStatsOpen(result)
+    }, statsDelay)
   })
+}
+
+function showStatsChoice (data) {
+  console.log("Showing choice stats")
+  document.body.classList.remove('is-play')
+  document.body.classList.add('is-stats-choice')
+}
+
+function showStatsEstimate (data) {
+  console.log("Showing estimate stats")
+  document.body.classList.remove('is-play')
+  document.body.classList.add('is-stats-estimate')
+}
+
+function showStatsOpen (data) {
+  console.log("Showing open stats")
+  document.body.classList.remove('is-play')
+  document.body.classList.add('is-stats-open')
 }
 
 function showPrompt (type, prompt) {
