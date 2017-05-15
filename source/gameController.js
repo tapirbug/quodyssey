@@ -3,8 +3,8 @@ const quizController = require('./quizController');
 
 const estimationRange = 0.1;
 const maxEditDistance = 2;
-const questionDuration = 15;
-const postQuestionDuration = 5;
+const questionDuration = 15000;
+const postQuestionDuration = 5000;
 
 const openIds = [];
 for (let i = 1000; i <= 9999; i++) openIds.push(i);
@@ -38,7 +38,7 @@ function ask(req, res) {
             setTimeout(() => {
                 games[gameId].queuedRounds--;
                 generateNewQuestion(gameId);
-            }, remainingTime + (games[gameId].queuedRounds * (questionDuration + postQuestionDuration) + postQuestionDuration) * 1000);
+            }, remainingTime + postQuestionDuration + games[gameId].queuedRounds * (questionDuration + postQuestionDuration));
             games[gameId].queuedRounds++;
             return res.json({ success: true, queuePosition: games[gameId].queuedRounds });
         }
@@ -52,13 +52,13 @@ function generateNewQuestion(gameId) {
     const question = quizController.getQuestion();
     const date = new Date();
     date.setSeconds(date.getSeconds() + questionDuration);
-    if (question.type == 'choice') {
+    if (question.type === 'choice') {
         games[gameId].rounds[games[gameId].roundId] = { question: question.id, participants: 0, correct: 0, a: 0, b: 0, c: 0, d: 0, end: date };
-    } else if (question.type == 'estimate') {
+    } else if (question.type === 'estimate') {
         games[gameId].rounds[games[gameId].roundId] = { question: question.id, participants: 0, correct: 0, max: undefined, min: undefined, end: date };
-    } else if (question.type == 'open') {
+    } else if (question.type === 'open') {
         games[gameId].rounds[games[gameId].roundId] = { question: question.id, participants: 0, correct: 0, end: date };
-    } else if (question.type == 'order') {
+    } else if (question.type === 'order') {
         games[gameId].rounds[games[gameId].roundId] = { question: question.id, participants: 0, correct: 0, end: date };
     }
     return question;
@@ -87,20 +87,20 @@ function answer(req, res) {
     if (round.end < new Date()) return res.json({ success: false, error: 'Round over.' });
     const question = quizController.getQuestion(round.question);
     if (games[gameId].users[username].round >= roundId) return res.json({ success: false, error: 'User has already answered.' });
-    if (question.type == 'choice' && !['a', 'b', 'c', 'd'].includes(answer)) return res.json({ success: false, error: 'Wrong answer format.' });
-    if (question.type == 'estimate' && isNaN(answer)) return res.json({ success: false, error: 'Answer was not a number.' });
-    if (question.type == 'order' && (answer.length != 4 || !answer.includes('a') || !answer.includes('b') || !answer.includes('c') || !answer.includes('d'))) return res.json({ success: false, error: 'Wrong answer format.' });
+    if (question.type === 'choice' && !['a', 'b', 'c', 'd'].includes(answer)) return res.json({ success: false, error: 'Wrong answer format.' });
+    if (question.type === 'estimate' && isNaN(answer)) return res.json({ success: false, error: 'Answer was not a number.' });
+    if (question.type === 'order' && (answer.length != 4 || !answer.includes('a') || !answer.includes('b') || !answer.includes('c') || !answer.includes('d'))) return res.json({ success: false, error: 'Wrong answer format.' });
 
     games[gameId].users[username].round = roundId;
     round.participants++;
-    if (question.type == 'choice') {
+    if (question.type === 'choice') {
         round[answer]++;
-        if (answer == quizController.getAnswer(round.question)) {
+        if (answer === quizController.getAnswer(round.question)) {
             round.correct++;
             games[gameId].users[username].score++;
         }
         return res.json({ success: true });
-    } else if (question.type == 'estimate') {
+    } else if (question.type === 'estimate') {
         if (!round.min || answer < round.min) round.min = answer;
         if (!round.max || answer > round.max) round.max = answer;
         if (Math.abs(quizController.getAnswer(round.question) - answer) < quizController.getAnswer(round.question) * estimationRange) {
@@ -108,13 +108,13 @@ function answer(req, res) {
             games[gameId].users[username].score++;
         }
         return res.json({ success: true });
-    } else if (question.type == 'open') {
+    } else if (question.type === 'open') {
         if (editDistance(quizController.getAnswer(round.question), answer, maxEditDistance)) {
             round.correct++;
             games[gameId].users[username].score++;
         }
         return res.json({ success: true });
-    } else if (question.type == 'order') {
+    } else if (question.type === 'order') {
         if (quizController.getAnswer(round.question) === answer) {
             round.correct++;
             games[gameId].users[username].score++;
@@ -142,7 +142,7 @@ function resultAction(req, res) {
     if (!games[gameId].rounds[roundId]) return res.json({ success: false, error: 'Round not found.' });
     const round = games[gameId].rounds[roundId];
     if (round.end > new Date()) return res.json({ success: false, error: 'Round not over.' });
-    return res.json({ success: true, result: round.correct == 0 ? 0 : round.correct / round.participants });
+    return res.json({ success: true, result: round.correct === 0 ? 0 : round.correct / round.participants });
 };
 
 function scoreboard(req, res) {
