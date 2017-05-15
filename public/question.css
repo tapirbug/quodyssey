@@ -354,3 +354,20 @@ span.menue-prompt {
 	font-weight: bold;
 	color: #00B9EF;
 }
+
+.screen-stats-choice-amount {
+  float: left;
+  padding-right: 1.2em;
+}
+
+.screen-stats-choice-amount.is-wrong,
+.screen-stats-choice-answer.is-wrong,
+.screen-stats-choice-correct {
+  color: red;
+}
+
+.screen-stats-choice-amount.is-correct,
+.screen-stats-choice-answer.is-correct,
+.screen-stats-choice-wrong {
+  color: green;
+}
