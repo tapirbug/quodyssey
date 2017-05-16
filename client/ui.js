@@ -29,6 +29,12 @@ const statsDelay = 1500
 const mod = {
   processAnswer (answerObj) { return Promise.reject(new Error('No answer processing connected to UI')) },
 
+  showWaitingForNextRound () {
+    document.body.classList.remove('is-join')
+    document.body.classList.add('is-play')
+    questionElem.classList.add('is-waiting')
+  },
+
   //
   // Takes an object with at least a 'question' property, holding a string with
   // the question text and an 'options' property with something as an answer,
@@ -218,7 +224,7 @@ function showStatsOpen (question, answer, result) {
   console.log(question)
   console.log(answer)
   console.log(result)
-  
+
   document.body.classList.remove('is-play')
   document.body.classList.add('is-stats-open')
 }

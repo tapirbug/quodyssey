@@ -34,6 +34,7 @@ function join() {
 
   quiz = quodyssey(hostname, port, gameID)
   quiz.join(username).then(function() {
+    ui.showWaitingForNextRound()
     connectQuiz()
   })
 }
