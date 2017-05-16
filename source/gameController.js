@@ -51,7 +51,8 @@ function generateNewQuestion(gameId) {
     games[gameId].roundId++;
     const question = quizController.getQuestion();
     const date = new Date();
-    date.setSeconds(date.getSeconds() + questionDuration);
+    const questionDurationSecs = questionDuration / 1000
+    date.setSeconds(date.getSeconds() + questionDurationSecs);
     if (question.type === 'choice') {
         games[gameId].rounds[games[gameId].roundId] = { question: question.id, participants: 0, correct: 0, a: 0, b: 0, c: 0, d: 0, end: date };
     } else if (question.type === 'estimate') {
