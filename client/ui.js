@@ -20,6 +20,8 @@ let timerNumber
 
 let answeredLastShown = true
 
+let statsTimeout
+
 const statsDelay = 1500
 
 // Publicly visible functions
@@ -51,6 +53,13 @@ const mod = {
 
     answeredLastShown = false
     currentQuestion = question
+
+    // If showing stats is pending, stop the timeout, the next question is
+    // more important
+    if(statsTimeout) {
+      clearTimeout(statsTimeout)
+      statsTimeout = undefined
+    }
   },
 
   showRoomcode (roomcode) {
@@ -95,7 +104,7 @@ function processMultipleChoiceAnswer (idx) {
       )
       timerElement.classList.add(result.success ? 'is-correct' : 'is-wrong')
 
-      window.setTimeout(function() {
+      statsTimeout = setTimeout(function() {
         showStatsChoice(result)
       }, statsDelay)
     })
@@ -120,7 +129,7 @@ function processEstimateAnswer (estimateVal) {
       estimateConfirmElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
       timerElement.classList.add(result.success ? 'is-correct' : 'is-wrong')
 
-      window.setTimeout(function() {
+      statsTimeout = window.setTimeout(function() {
         showStatsEstimate(result)
       }, statsDelay)
     })
@@ -144,7 +153,7 @@ function processOpenAnswer (answer) {
     openConfirmElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
     timerElement.classList.add(result.success ? 'is-correct' : 'is-wrong')
 
-    window.setTimeout(function() {
+    statsTimeout = window.setTimeout(function() {
       showStatsOpen(result)
     }, statsDelay)
   })
