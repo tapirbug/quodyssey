@@ -11,6 +11,9 @@ let multipleChoiceStatsAnswerElems
 
 let estimateInputElem
 let estimateConfirmElem
+let estimateAvgElem
+let estimateMinElem
+let estimateMaxElem
 
 let openInputElem
 let openConfirmElem
@@ -19,8 +22,6 @@ let timerElement
 let timerNumber
 
 let answeredLastShown = true
-
-let statsTimeout
 
 const statsDelay = 1500
 
@@ -53,12 +54,27 @@ const mod = {
 
     answeredLastShown = false
     currentQuestion = question
+  },
 
-    // If showing stats is pending, stop the timeout, the next question is
-    // more important
-    if(statsTimeout) {
-      clearTimeout(statsTimeout)
-      statsTimeout = undefined
+  //
+  // Shows statistics for the last shown question
+  //
+  showStats (question, answer, results) {
+    switch(question.type) {
+      case "choice":
+        showStatsChoice(question, answer, results)
+        break
+
+      case "estimate":
+        showStatsEstimate(question, answer, results)
+        break
+
+      case "open":
+        showStatsOpen(question, answer, results)
+        break
+
+      default:
+        throw new Error(`Cannot show stats for type ${question.type}`)
     }
   },
 
@@ -96,17 +112,7 @@ function processMultipleChoiceAnswer (idx) {
       multipleChoiceElements.forEach(
         (el, idx) => el.classList.add((idx == result.solution) ? 'is-correct' : 'is-wrong')
       )
-      multipleChoiceStatsAnswerElems.forEach(
-        (el, idx) => el.classList.add((idx == result.solution) ? 'is-correct' : 'is-wrong')
-      )
-      multipleChoiceStatsAmountElems.forEach(
-        (el, idx) => el.classList.add((idx == result.solution) ? 'is-correct' : 'is-wrong')
-      )
       timerElement.classList.add(result.success ? 'is-correct' : 'is-wrong')
-
-      statsTimeout = setTimeout(function() {
-        showStatsChoice(result)
-      }, statsDelay)
     })
 
   }
@@ -128,10 +134,6 @@ function processEstimateAnswer (estimateVal) {
       estimateInputElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
       estimateConfirmElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
       timerElement.classList.add(result.success ? 'is-correct' : 'is-wrong')
-
-      statsTimeout = window.setTimeout(function() {
-        showStatsEstimate(result)
-      }, statsDelay)
     })
 
   }
@@ -152,31 +154,40 @@ function processOpenAnswer (answer) {
     openInputElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
     openConfirmElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
     timerElement.classList.add(result.success ? 'is-correct' : 'is-wrong')
-
-    statsTimeout = window.setTimeout(function() {
-      showStatsOpen(result)
-    }, statsDelay)
   })
 }
 
-function showStatsChoice (data) {
+function showStatsChoice (question, answer, result) {
   document.body.classList.remove('is-play')
   document.body.classList.add('is-stats-choice')
 
-  const amountElems = document.querySelectorAll('.screen-stats-choice-amount')
-  const answerElems = document.querySelectorAll('.screen-stats-choice-answer')
+  const solutionIdx = ['a', 'b', 'c', 'd'].indexOf(result.answer)
+
+  const amounts = [
+    result.result.a,
+    result.result.b,
+    result.result.c,
+    result.result.d
+  ]
+  const answers = question.options
+
+  multipleChoiceStatsAnswerElems.forEach(
+    (el, idx) => {
+      el.textContent = answers[idx]
+      el.classList.add((idx == solutionIdx) ? 'is-correct' : 'is-wrong')
+    }
+  )
+  multipleChoiceStatsAmountElems.forEach(
+    (el, idx) => {
+      el.textContent = amounts[idx]
+      el.classList.add((idx == solutionIdx) ? 'is-correct' : 'is-wrong')
+    }
+  )
+
   const correctElem = document.querySelector('.screen-stats-choice-correct')
   const wrongElem = document.querySelector('.screen-stats-choice-wrong')
 
-  const amounts = data.distribution
-  const answers = [ 'A', 'B', 'C', 'D' ]
-
-  console.log(amounts)
-  console.log(amountElems)
-  amountElems.forEach((el, idx) => el.textContent = amounts[idx])
-  answerElems.forEach((el, idx) => el.textContent = answers[idx])
-
-  if(data.success) {
+  if(answer && answer.idx == solutionIdx) {
     correctElem.style.display = 'block'
     wrongElem.style.display = 'none'
   } else {
@@ -185,14 +196,29 @@ function showStatsChoice (data) {
   }
 }
 
-function showStatsEstimate (data) {
+function showStatsEstimate (question, answer, result) {
   console.log("Showing estimate stats")
+  console.log(question)
+  console.log(answer)
+  console.log(result)
+
+  const { max, min, participants } = result.result
+  const correctCount = result.result.correct
+
   document.body.classList.remove('is-play')
   document.body.classList.add('is-stats-estimate')
+
+  estimateAvgElem.textContent = "Something like ~" + ((max+min) / 2)
+  estimateMaxElem.textContent = max
+  estimateMinElem.textContent = min
 }
 
-function showStatsOpen (data) {
+function showStatsOpen (question, answer, result) {
   console.log("Showing open stats")
+  console.log(question)
+  console.log(answer)
+  console.log(result)
+  
   document.body.classList.remove('is-play')
   document.body.classList.add('is-stats-open')
 }
@@ -332,6 +358,10 @@ function obtainElements () {
 
   timerElement = document.querySelector("#timer")
   timerNumber = document.querySelector("#timer_number")
+
+  estimateAvgElem = document.querySelector('.screen-stats-estimate-avg')
+  estimateMinElem = document.querySelector('.screen-stats-estimate-min')
+  estimateMaxElem = document.querySelector('.screen-stats-estimate-max')
 }
 
 function wireEvents () {

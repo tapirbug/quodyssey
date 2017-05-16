@@ -7,9 +7,12 @@ const quodyssey = require('./quodyssey')
 const hostname = false
 const port = false
 
+const showStatsDelayMs = 3000
+
 let quiz
 let gameID
 let username
+let statsTimeout
 
 wireEvents();
 
@@ -37,7 +40,6 @@ function join() {
 
 function connectQuiz () {
   ui.showRoomcode(gameID)
-  ui.processAnswer = quiz.answer
 
   quiz.getQuestion().then(function(question) {
     if(!question) {
@@ -50,7 +52,26 @@ function connectQuiz () {
 }
 
 function showQuestion(question) {
+  let answer
+
   // Immediately sign up for newer questions
   quiz.getNextQuestion().then(showQuestion)
   ui.showQuestion(question)
+
+  ui.processAnswer = function (answerObj) {
+    answer = answerObj
+    return quiz.answer(answer)
+  }
+
+  if(statsTimeout) {
+    clearTimeout(statsTimeout)
+  }
+
+  const questionTimeMs = quiz.getCurrentQuestionRemainingTime()
+
+  statsTimeout = setTimeout(function () {
+    quiz.getResultForQuiz(question.round).then(function(results) {
+      ui.showStats(question, answer, results)
+    })
+  }, questionTimeMs + showStatsDelayMs)
 }
