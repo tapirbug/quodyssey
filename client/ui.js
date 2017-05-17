@@ -246,7 +246,7 @@ function showStatsOpen (question, answer, result) {
   const correctAnswer = result.answer
   const givenAnswer = (answer) ? answer.answer : ''
 
-  const goodEnough = editDistance(quizController.getAnswer(round.question), givenAnswer, maxEditDistance)
+  const goodEnough = editDistance(correctAnswer, givenAnswer, maxEditDistance)
 
   const okEl = document.querySelector('.screen-stats-open-correct')
   const wrongEl = document.querySelector('.screen-stats-open-wrong')
