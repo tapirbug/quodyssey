@@ -217,6 +217,16 @@ function showStatsEstimate (question, answer, result) {
   estimateAvgElem.textContent = "Something like ~" + ((max+min) / 2)
   estimateMaxElem.textContent = max
   estimateMinElem.textContent = min
+
+  const estimateVal = answer.estimate
+  const exactVal = result.answer
+  // If less than 10% off, show as correct
+  const goodEnough = Math.abs(exactVal - estimateVal) < (exactVal * 0.1)
+  const okEl = document.querySelector('.screen-stats-estimate-correct')
+  const wrongEl = document.querySelector('.screen-stats-estimate-wrong')
+
+  okEl.style.display = (goodEnough) ? 'block' : 'none'
+  wrongEl.style.display = (!goodEnough) ? 'block' : 'none'
 }
 
 function showStatsOpen (question, answer, result) {
