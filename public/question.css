@@ -363,13 +363,15 @@ span.menue-prompt {
 .screen-stats-choice-amount.is-wrong,
 .screen-stats-choice-answer.is-wrong,
 .screen-stats-choice-wrong,
-.screen-stats-estimate-wrong {
+.screen-stats-estimate-wrong,
+.screen-stats-open-wrong {
   color: red;
 }
 
 .screen-stats-choice-amount.is-correct,
 .screen-stats-choice-answer.is-correct,
 .screen-stats-choice-correct,
-.screen-stats-estimate-correct {
+.screen-stats-estimate-correct,
+.screen-stats-open-correct {
   color: green;
 }

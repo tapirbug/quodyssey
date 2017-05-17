@@ -1,4 +1,7 @@
 
+const editDistance = require('../source/editDistance');
+const maxEditDistance = 2;
+
 let currentQuestion
 
 let questionElem
@@ -180,12 +183,14 @@ function showStatsChoice (question, answer, result) {
   multipleChoiceStatsAnswerElems.forEach(
     (el, idx) => {
       el.textContent = answers[idx]
+      el.classList.remove((idx != solutionIdx) ? 'is-correct' : 'is-wrong')
       el.classList.add((idx == solutionIdx) ? 'is-correct' : 'is-wrong')
     }
   )
   multipleChoiceStatsAmountElems.forEach(
     (el, idx) => {
       el.textContent = amounts[idx]
+      el.classList.remove((idx != solutionIdx) ? 'is-correct' : 'is-wrong')
       el.classList.add((idx == solutionIdx) ? 'is-correct' : 'is-wrong')
     }
   )
@@ -237,6 +242,16 @@ function showStatsOpen (question, answer, result) {
 
   document.body.classList.remove('is-play')
   document.body.classList.add('is-stats-open')
+
+  const correctAnswer = result.answer
+  const givenAnswer = (answer) ? answer.answer : ''
+
+  const goodEnough = editDistance(quizController.getAnswer(round.question), givenAnswer, maxEditDistance)
+
+  const okEl = document.querySelector('.screen-stats-open-correct')
+  const wrongEl = document.querySelector('.screen-stats-open-wrong')
+  okEl.style.display = (goodEnough) ? 'block' : 'none'
+  wrongEl.style.display = (!goodEnough) ? 'block' : 'none'
 }
 
 function showPrompt (type, prompt) {
