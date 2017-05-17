@@ -239,11 +239,6 @@ module.exports = [
     },
     {
         type: 'open',
-        question: 'Who is the new French President?',
-        answer: 'Emmanuel Macron'
-    },
-    {
-        type: 'open',
         question: 'Who was the leading politician in favor of Brexit?',
         answer: 'Nigel Farage'
     },
