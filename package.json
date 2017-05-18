@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "dev": "cd client/ && webpack --progress --watch & node app.js"
+    "dev": "bash -c \"cd client/ && webpack --progress --watch & node app.js\"",
+    "deploy": "ssh quovadis@gienah.uberspace.de ./upgrade.sh"
   },
   "dependencies": {
     "body-parser": "~1.17.1",
