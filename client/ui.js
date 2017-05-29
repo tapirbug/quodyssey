@@ -213,13 +213,13 @@ function showStatsEstimate (question, answer, result) {
   console.log(answer)
   console.log(result)
 
-  const { max, min, participants } = result.result
+  const { max, min, avg, participants } = result.result
   const correctCount = result.result.correct
 
   document.body.classList.remove('is-play')
   document.body.classList.add('is-stats-estimate')
 
-  estimateAvgElem.textContent = "Something like ~" + ((max+min) / 2)
+  estimateAvgElem.textContent = avg
   estimateMaxElem.textContent = max
   estimateMinElem.textContent = min
 

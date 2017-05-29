@@ -212,6 +212,9 @@ function answer(req, res) {
     } else if (question.type === 'estimate') {
         if (!round.min || answer < round.min) round.min = answer;
         if (!round.max || answer > round.max) round.max = answer;
+        if (!round.sum) { round.sum = 0 }
+        round.sum += answer;
+        round.avg = round.sum / round.participants
         if (Math.abs(quizController.getAnswer(round.question) - answer) < quizController.getAnswer(round.question) * estimationRange) {
             round.correct++;
             games[gameId].users[username].score++;
