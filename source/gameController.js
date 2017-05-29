@@ -223,6 +223,13 @@ function answer(req, res) {
             success: true
         });
     } else if (question.type === 'open') {
+        round.distribution = round.distribution || {};
+        if(answer in round.distribution) {
+          round.distribution[answer]++;
+        } else {
+          round.distribution[answer] = 1;
+        }
+
         if (editDistance(quizController.getAnswer(round.question), answer, maxEditDistance)) {
             round.correct++;
             games[gameId].users[username].score++;

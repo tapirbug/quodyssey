@@ -20,6 +20,7 @@ let estimateMaxElem
 
 let openInputElem
 let openConfirmElem
+let openAnswerList
 
 let timerElement
 let timerNumber
@@ -246,6 +247,22 @@ function showStatsOpen (question, answer, result) {
   const correctAnswer = result.answer
   const givenAnswer = (answer) ? answer.answer : ''
 
+  const { distribution } = result.result
+  const answers = Object.keys(distribution).map(
+    answer => {
+      return {
+        answer: answer,
+        count: distribution[answer],
+        correct: editDistance(correctAnswer, answer, maxEditDistance)
+      }
+    }
+  ).sort((a,b) => b.count - a.count)
+
+  openAnswerList.innerHTML = answers.map(
+    a => `<dt class="defs-key ${a.correct ? 'is-correct' : 'is-wrong'}">${a.count}</dt>
+          <dd class="defs-val ${a.correct ? 'is-correct' : 'is-wrong'}">${a.answer}</dd>`
+  )
+
   const goodEnough = editDistance(correctAnswer, givenAnswer, maxEditDistance)
 
   const okEl = document.querySelector('.screen-stats-open-correct')
@@ -393,6 +410,8 @@ function obtainElements () {
   estimateAvgElem = document.querySelector('.screen-stats-estimate-avg')
   estimateMinElem = document.querySelector('.screen-stats-estimate-min')
   estimateMaxElem = document.querySelector('.screen-stats-estimate-max')
+
+  openAnswerList = document.querySelector('#screen-stats-open-answers')
 }
 
 function wireEvents () {
