@@ -191,9 +191,11 @@ module.exports = function (hostname, port, gameID, username) {
                     get(`resultQ/${gameID}/${round}`).then(function (result) {
                         console.log(JSON.stringify(result))
                         const exactVal = result.answer
+                        const { max, min } = result.result
+                        const avg = 0.5 * (max - min)
                         // If less than 10% off, show as correct
                         const goodEnough = Math.abs(exactVal - estimateVal) < (exactVal * 0.1)
-                        resolve({ success: goodEnough, solution: exactVal })
+                        resolve({ success: goodEnough, solution: exactVal, max, min, avg })
                     })
                 }, Math.max(msLeft, 0))
             })

@@ -1,6 +1,6 @@
 
-const editDistance = require('../source/editDistance');
-const maxEditDistance = 2;
+const editDistance = require('../source/editDistance')
+const maxEditDistance = 2
 
 let currentQuestion
 

@@ -20,9 +20,9 @@ function wireEvents() {
   document.querySelector('#bottom-right-arrow > a').addEventListener(
     'click',
     function (evt) {
-      evt.preventDefault();
+      evt.preventDefault()
       if(roomInput.value && usernameInput.value) {
-        join();
+        join()
       }
     }
   )
@@ -72,7 +72,13 @@ function showQuestion(question) {
 
   statsTimeout = setTimeout(function () {
     quiz.getResultForQuiz(question.round).then(function(results) {
-      ui.showStats(question, answer, results)
+      if(!answer) {
+        // If user did nothing, show statistics immediately
+        ui.showStats(question, undefined, results)
+      } else {
+        // If did answer, first show simple feedback and show statistics after a delay
+        setTimeout(() => ui.showStats(question, answer, results), showStatsDelayMs)
+      }
     })
-  }, questionTimeMs + showStatsDelayMs)
+  }, questionTimeMs)
 }
