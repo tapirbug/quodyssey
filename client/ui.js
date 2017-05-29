@@ -220,11 +220,11 @@ function showStatsEstimate (question, answer, result) {
   document.body.classList.remove('is-play')
   document.body.classList.add('is-stats-estimate')
 
-  estimateAvgElem.textContent = avg
-  estimateMaxElem.textContent = max
-  estimateMinElem.textContent = min
+  estimateAvgElem.textContent = (avg === undefined) ? 'n/a' : avg
+  estimateMaxElem.textContent = (max === undefined) ? 'n/a' : max
+  estimateMinElem.textContent = (min === undefined) ? 'n/a' : min
 
-  const estimateVal = answer.estimate
+  const estimateVal = answer ? answer.estimate : Number.MAX_VALUE
   const exactVal = result.answer
   // If less than 10% off, show as correct
   const goodEnough = Math.abs(exactVal - estimateVal) < (exactVal * 0.1)
@@ -248,7 +248,7 @@ function showStatsOpen (question, answer, result) {
   const givenAnswer = (answer) ? answer.answer : ''
 
   const { distribution } = result.result
-  const answers = Object.keys(distribution).map(
+  const answers = distribution ? Object.keys(distribution).map(
     answer => {
       return {
         answer: answer,
@@ -256,14 +256,14 @@ function showStatsOpen (question, answer, result) {
         correct: editDistance(correctAnswer, answer, maxEditDistance)
       }
     }
-  ).sort((a,b) => b.count - a.count)
+  ).sort((a,b) => b.count - a.count) : []
 
-  openAnswerList.innerHTML = answers.map(
+  openAnswerList.innerHTML = answers ? answers.map(
     a => `<dt class="defs-key ${a.correct ? 'is-correct' : 'is-wrong'}">${a.count}</dt>
           <dd class="defs-val ${a.correct ? 'is-correct' : 'is-wrong'}">${a.answer}</dd>`
-  )
+  ) : ''
 
-  const goodEnough = editDistance(correctAnswer, givenAnswer, maxEditDistance)
+  const goodEnough = givenAnswer ? editDistance(correctAnswer, givenAnswer, maxEditDistance) : false
 
   const okEl = document.querySelector('.screen-stats-open-correct')
   const wrongEl = document.querySelector('.screen-stats-open-wrong')
