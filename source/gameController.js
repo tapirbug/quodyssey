@@ -133,6 +133,7 @@ function generateNewQuestion(gameId) {
             end: date
         };
     }
+    sendQuestionData(gameId);
     return question;
 }
 
@@ -339,10 +340,11 @@ function updateTimeout(gameId) {
 
 function sendQuestionData(gameId) {
     const game = games[gameId];
+    const round = game.rounds[game.roundId];
     const remainingTime = round.end.getTime() - new Date().getTime();
     
     fayeController.sendNotification(gameId, {
-        type: 'scoreboard',
+        type: 'question',
         data: {
             round: game.roundId,
             question: quizController.getQuestion(round.question),
