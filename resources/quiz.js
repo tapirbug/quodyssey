@@ -33,7 +33,7 @@ module.exports = [
         a: 'Aladdin - Bambi - Mulan - Toy Story',
         b: 'Bambi - Aladdin - Toy Story - Mulan',
         c: 'Mulan - Bambi - Aladdin - Toy Story',
-        d: 'Toy Story - Aladdin - Bambi - Mulan'
+        d: 'Toy Story - Aladdin - Bambi - Mulan'e
     },
     {
         type: 'choice',
@@ -163,7 +163,7 @@ module.exports = [
     },
     {
         type: 'choice',
-        question: 'How many teeth does humans have in total?',
+        question: 'How many teeth do humans have in total?',
         answer: 'b',
         a: '36',
         b: '32',
@@ -196,6 +196,87 @@ module.exports = [
         b: 'Unilever',
         c: 'PepsiCo',
         d: 'Nestle'
+    },
+    {
+        type: 'choice',
+        question: 'Which of these hands would have the lowest value in poker?',
+        answer: 'a',
+        a: 'Three of a kind',
+        b: 'Straight',
+        c: 'Flush',
+        d: 'Full house'
+    },
+    {
+        type: 'choice',
+        question: 'Which of these movies made the most money in box office?',
+        answer: 'c',
+        a: 'The Dark Knight',
+        b: 'Titanic',
+        c: 'Avatar',
+        d: 'Star Wars: Episode VII'
+    },
+    {
+        type: 'choice',
+        question: 'Which of these movies made the least money in box office?',
+        answer: 'd',
+        a: 'The Dark Knight Rises',
+        b: 'Inception',
+        c: 'Guardians Of The Galaxy',
+        d: 'Suicide Squad'
+    },
+    {
+        type: 'choice',
+        question: 'Which of these cities has the most inhabitants?',
+        answer: 'c',
+        a: 'Berlin',
+        b: 'Madrid',
+        c: 'Saint Petersburg',
+        d: 'Paris'
+    },
+    {
+        type: 'choice',
+        question: 'Which of these cities has the least inhabitants?',
+        answer: 'd',
+        a: 'Minsk',
+        b: 'Vienna',
+        c: 'Budapest',
+        d: 'Barcelona'
+    },
+    {
+        type: 'choice',
+        question: 'Which of these companies did Facebook not buy?',
+        answer: 'a',
+        a: 'Behavio',
+        b: 'WhatsApp',
+        c: 'Hot Potato',
+        d: 'Instagram'
+    },
+    {
+        type: 'choice',
+        question: 'How old was Harry Potter when he first went to Hogwarts?',
+        answer: 'c',
+        a: '9',
+        b: '10',
+        c: '11',
+        d: 'None of these'
+    },
+    {
+        type: 'choice',
+        question: 'Which one of these is not a Belgian beer?',
+        answer: 'c',
+        a: 'Duvel',
+        b: 'Leffe',
+        c: 'Bavaria',
+        d: 'Primus'
+    },
+    {
+        type: 'choice',
+        question: 'When was Star Wars: Episode V released?',
+        answer: 'b',
+        a: '1979',
+        b: '1980',
+        c: '2002',
+        d: '2003'
     },
     {
         type: 'estimate',
@@ -233,6 +314,66 @@ module.exports = [
         answer: 40000
     },
     {
+        type: 'estimate',
+        question: 'How many countries are in the EU?',
+        answer: 28
+    },
+    {
+        type: 'estimate',
+        question: 'How many students are studying at FH Hagenberg?',
+        answer: 1574
+    },
+    {
+        type: 'estimate',
+        question: 'How many cities are there in Europe that have over a million inhabitants?',
+        answer: 33
+    },
+    {
+        type: 'estimate',
+        question: 'How many views does Gangnam style have on youtube?',
+        answer: 2855164999
+    },
+    {
+        type: 'estimate',
+        question: 'How many full length albums has Taylor Swift released?',
+        answer: 5
+    },
+    {
+        type: 'estimate',
+        question: 'How many original songs have The Beatles released?',
+        answer: 237
+    },
+    {
+        type: 'estimate',
+        question: 'How many cards are there in a UNO deck?',
+        answer: 108
+    },
+    {
+        type: 'estimate',
+        question: 'How many tigers are currently still living in the wild?',
+        answer: 3890
+    },
+    {
+        type: 'estimate',
+        question: 'How many employees does Google have?',
+        answer: 61814
+    },
+    {
+        type: 'estimate',
+        question: 'How much did Facebook pay to acquire WhatsApp?',
+        answer: 19000000000
+    },
+    {
+        type: 'estimate',
+        question: 'How many movies based on Tolkien\'s Middle Earth were made so far?',
+        answer: 6
+    },
+    {
+        type: 'estimate',
+        question: 'How many actors appear in all 8 of the Harry Potter movies?',
+        answer: 14
+    },
+    {
         type: 'open',
         question: 'What is the working title of this game?',
         answer: 'Quodyssey'
@@ -261,5 +402,90 @@ module.exports = [
         type: 'open',
         question: 'Which company is currently the market leader in cloud services?',
         answer: 'Amazon'
-    }
+    },
+    {
+        type: 'open',
+        question: 'What is the name of the Katy Perry song featured in the movie The Interview?',
+        answer: 'Fireworks'
+    },
+    {
+        type: 'open',
+        question: 'Which country won the European Championships in 2016?',
+        answer: 'Portugal'
+    },
+    {
+        type: 'open',
+        question: 'Which country won the last World Cup in Brazil?',
+        answer: 'Germany'
+    },
+    {
+        type: 'open',
+        question: 'What is the of the athlete that won a gold medal for the 5000m and the 10000m at the last two Olympic Games?',
+        answer: 'Mo Farah'
+    },
+    {
+        type: 'open',
+        question: 'Which country won the last World Cup in Brazil?',
+        answer: 'Germany'
+    },
+    {
+        type: 'open',
+        question: 'Which programming languge is most known for being named after a gem?',
+        answer: 'Ruby'
+    },
+    { 
+        type: 'open',
+        question: 'Which IDE\'s name has a connection to the moon?',
+        answer: 'Eclipse'
+    },
+    { 
+        type: 'open',
+        question: 'What is the name of the director of Inception?',
+        answer: 'Christopher Nolan'
+    },
+    { 
+        type: 'open',
+        question: 'What is the name of the actor who plays Elrond in the lord of the rings?',
+        answer: 'Hugo Weaving'
+    },
+    { 
+        type: 'open',
+        question: 'In the Harry Potter series, what is the name of the famous Bulgarian seeker?',
+        answer: 'Viktor Krum'
+    },
+    { 
+        type: 'open',
+        question: 'In Game Of Thrones, what is the name of Daenerys\' brother?',
+        answer: 'Viserys'
+    },
+    { 
+        type: 'open',
+        question: 'Who portrays the delightful Francis Underwood in House of Cards?',
+        answer: 'Kevin Spacey'
+    },
+    { 
+        type: 'open',
+        question: 'Who is the voice of Darth Vader?',
+        answer: 'James Earl Jones'
+    },
+    { 
+        type: 'open',
+        question: 'Who played Deckard in Blade Runner?',
+        answer: 'Harrison Ford'
+    },
+    { 
+        type: 'open',
+        question: 'What\'s the name of Mickey Mouse\'s wife?',
+        answer: 'Minnie Mouse'
+    },
+    { 
+        type: 'open',
+        question: 'Who is the voice of Donkey in the Shrek movies?',
+        answer: 'Eddie Murphy'
+    },
+    { 
+        type: 'open',
+        question: 'What is the name of the layout of a french keyboard, it\'s not qwerty but?',
+        answer: 'azerty'
+    },
 ];
