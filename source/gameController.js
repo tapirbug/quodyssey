@@ -29,6 +29,7 @@ function start(req, res) {
         rounds: [],
         queuedRounds: 0,
         users: {},
+        ended: false,
         cssUrl: cssUrl
     };
     updateTimeout(gameId);
@@ -311,6 +312,7 @@ function scoreboard(req, res) {
     updateTimeout(gameId);
     return res.json({
         success: true,
+        ended: games[gameId].ended,
         scoreboard: scoreboard
     });
 };
@@ -321,6 +323,7 @@ function end(req, res) {
         success: false,
         error: 'Game not found.'
     });
+    games[gameId].ended = true;
     openIds.push(gameId);
     return res.json({
         success: true
