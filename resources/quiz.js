@@ -33,7 +33,7 @@ module.exports = [
         a: 'Aladdin - Bambi - Mulan - Toy Story',
         b: 'Bambi - Aladdin - Toy Story - Mulan',
         c: 'Mulan - Bambi - Aladdin - Toy Story',
-        d: 'Toy Story - Aladdin - Bambi - Mulan'e
+        d: 'Toy Story - Aladdin - Bambi - Mulan',
     },
     {
         type: 'choice',
