@@ -50,6 +50,15 @@ function connectQuiz () {
       showQuestion(question)
     }
   })
+
+  const interval = setInterval(function() {
+    quiz.getScoreboard().then(result => {
+      if(result.ended) {
+        ui.showScoreboard(result.scoreboard)
+        clearInterval(interval)
+      }
+    })
+  }, 500);
 }
 
 function showQuestion(question) {

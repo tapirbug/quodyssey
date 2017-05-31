@@ -1,4 +1,5 @@
 
+const Chartist = require('chartist')
 const editDistance = require('../source/editDistance')
 const maxEditDistance = 2
 
@@ -29,6 +30,8 @@ let answeredLastShown = true
 
 const statsDelay = 1500
 
+const scoreboardChartSel = '#screen-scoreboard-chart'
+
 // Publicly visible functions
 const mod = {
   processAnswer (answerObj) { return Promise.reject(new Error('No answer processing connected to UI')) },
@@ -47,12 +50,7 @@ const mod = {
   showQuestion (question) {
     const { type, prompt, options } = question
 
-    document.body.classList.remove('is-join')
-    document.body.classList.remove('is-stats-choice')
-    document.body.classList.remove('is-stats-estimate')
-    document.body.classList.remove('is-stats-open')
-
-    document.body.classList.add('is-play')
+    setBodyState('is-play')
 
     questionElem.classList.remove('is-waiting')
     timerElement.classList.remove('is-correct')
@@ -90,6 +88,22 @@ const mod = {
 
   showRoomcode (roomcode) {
     document.querySelector('#roomcode-text').textContent = roomcode
+  },
+
+  showScoreboard(scores) {
+    setBodyState('is-scoreboard')
+
+    const names = Object.keys(scores)
+    const points = [ names.map(n => scores[n]) ]
+    const data = {
+      labels: names,
+      series: points
+    }
+
+    new Chartist.Bar(
+      scoreboardChartSel,
+      data
+    )
   }
 }
 
@@ -98,7 +112,16 @@ wireEvents()
 
 module.exports = mod
 
-function tryAnswer() {
+function setBodyState (stateClassName)  {
+  document.body.classList.remove('is-join')
+  document.body.classList.remove('is-stats-choice')
+  document.body.classList.remove('is-stats-estimate')
+  document.body.classList.remove('is-stats-open')
+  document.body.classList.remove('is-scoreboard')
+  document.body.classList.add(stateClassName)
+}
+
+function tryAnswer () {
   if(answeredLastShown) { return false }
   answeredLastShown = true
   return true
