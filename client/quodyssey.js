@@ -107,6 +107,10 @@ module.exports = function (hostname, port, gameID, username) {
             return get(`resultA/${gameID}/${round}`)
         },
 
+        getScoreboard() {
+            return get(`scoreboard/${gameID}`)
+        },
+
         getCurrentQuestionRemainingTime: currentQuestionRemainingTime,
     }
 

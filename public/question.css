@@ -3,7 +3,12 @@ body {
   font-family: Helvetica, sans-serif;
 }
 
-.screen-join, .screen-play, .screen-stats-choice, .screen-stats-estimate, .screen-stats-open {
+.screen-join,
+.screen-play,
+.screen-stats-choice,
+.screen-stats-estimate,
+.screen-stats-open,
+.screen-scoreboard {
   display: none;
 }
 
@@ -11,7 +16,8 @@ body {
 .is-play .screen-play,
 .is-stats-choice .screen-stats-choice,
 .is-stats-estimate .screen-stats-estimate,
-.is-stats-open .screen-stats-open {
+.is-stats-open .screen-stats-open,
+.is-scoreboard .screen-scoreboard {
   display: block;
 }
 
