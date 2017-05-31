@@ -13,4 +13,7 @@ router.post('/ask', gameController.ask);
 router.post('/answer', gameController.answer);
 router.post('/end', gameController.end);
 
+const fayeClient = require('./client/fayeClient');
+fayeClient.register(6666);
+
 module.exports = router;

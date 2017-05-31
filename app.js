@@ -6,6 +6,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const router = require('./router');
+const fayeController = require('./source/fayeController');
 const app = express();
 
 app.set('views', path.join(__dirname, 'views'));
@@ -33,7 +34,9 @@ app.use(function (err, req, res, next) {
 });
 
 const port = process.env.QUOVADIS_PORT || 3333
-app.listen(port);
-console.log(`Server is now listening on port ${port}.`)
+const server = app.listen(port, () => {
+    console.log(`Server is now listening on port ${port}.`)
+    fayeController.attachFaye(server, '/channel');
+});
 
 module.exports = app;

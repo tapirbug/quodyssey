@@ -1,5 +1,6 @@
 const editDistance = require('./editDistance');
 const quizController = require('./quizController');
+const fayeController = require('./fayeController');
 
 const estimationRange = 0.1;
 const maxEditDistance = 2;
@@ -37,7 +38,7 @@ function start(req, res) {
         success: true,
         gameId: gameId
     });
-};
+}
 
 function join(req, res) {
     const gameId = req.body.gameId;
@@ -59,7 +60,7 @@ function join(req, res) {
         success: true,
         cssUrl: games[gameId].cssUrl
     });
-};
+}
 
 function ask(req, res) {
     const gameId = req.body.gameId;
@@ -90,7 +91,7 @@ function ask(req, res) {
         question: question.id,
         timeToResult: questionDuration
     });
-};
+}
 
 function generateNewQuestion(gameId) {
     games[gameId].roundId++;
@@ -155,7 +156,7 @@ function getQuestion(req, res) {
         question: quizController.getQuestion(round.question),
         end: remainingTime
     });
-};
+}
 
 function answer(req, res) {
     const gameId = req.body.gameId;
@@ -211,9 +212,9 @@ function answer(req, res) {
             success: true
         });
     } else if (question.type === 'estimate') {
-        if (!round.min || answer < round.min) round.min = answer;
-        if (!round.max || answer > round.max) round.max = answer;
-        if (!round.sum) { round.sum = 0 }
+        if (round.min === undefined || answer < round.min) round.min = answer;
+        if (round.max === undefined || answer > round.max) round.max = answer;
+        if (round.sum === undefined) round.sum = 0;
         round.sum += answer;
         round.avg = round.sum / round.participants
         if (Math.abs(quizController.getAnswer(round.question) - answer) < quizController.getAnswer(round.question) * estimationRange) {
@@ -247,7 +248,7 @@ function answer(req, res) {
             success: true
         });
     }
-};
+}
 
 function resultQuiz(req, res) {
     const gameId = req.params.gameId;
@@ -273,7 +274,7 @@ function resultQuiz(req, res) {
         answer: answer,
         result: round
     });
-};
+}
 
 function resultAction(req, res) {
     const gameId = req.params.gameId;
@@ -296,7 +297,7 @@ function resultAction(req, res) {
         success: true,
         result: round.correct === 0 ? 0 : round.correct / round.participants
     });
-};
+}
 
 function scoreboard(req, res) {
     const gameId = req.params.gameId;
@@ -306,16 +307,14 @@ function scoreboard(req, res) {
     });
     const users = games[gameId].users;
     const scoreboard = {};
-    for (const key in users) {
-        scoreboard[key] = users[key].score;
-    };
+    for (const key in users) scoreboard[key] = users[key].score;
     updateTimeout(gameId);
     return res.json({
         success: true,
         ended: games[gameId].ended,
         scoreboard: scoreboard
     });
-};
+}
 
 function end(req, res) {
     const gameId = req.body.gameId;
@@ -325,16 +324,44 @@ function end(req, res) {
     });
     games[gameId].ended = true;
     openIds.push(gameId);
+    sendScoreboardData(gameId);
     return res.json({
         success: true
     });
-};
+}
 
 function updateTimeout(gameId) {
     const date = new Date();
     date.setMilliseconds(date.getMilliseconds() + timeoutDuration);
     timeouts[gameId] = date;
     return date;
+}
+
+function sendQuestionData(gameId) {
+    const game = games[gameId];
+    const remainingTime = round.end.getTime() - new Date().getTime();
+    
+    fayeController.sendNotification(gameId, {
+        type: 'scoreboard',
+        data: {
+            round: game.roundId,
+            question: quizController.getQuestion(round.question),
+            end: remainingTime
+        }
+    });
+}
+
+function sendScoreboardData(gameId) {
+    const users = games[gameId].users;
+    const scoreboard = {};
+    for (const key in users) scoreboard[key] = users[key].score;
+    fayeController.sendNotification(gameId, {
+        type: 'scoreboard',
+        data: {
+            ended: games[gameId].ended,
+            scoreboard: scoreboard
+        }
+    });
 }
 
 module.exports = {
