@@ -1,7 +1,8 @@
 
 const requestPromise = require('axios')
-
+const editDistance = require('../source/editDistance')
 const questionPollingIntervalMs = 250
+const maxEditDistance = 2
 
 module.exports = function (hostname, port, gameID, username) {
 
@@ -225,7 +226,8 @@ module.exports = function (hostname, port, gameID, username) {
                 const msLeft = currentQuestionRemainingTime()
                 setTimeout(function () {
                     get(`resultQ/${gameID}/${round}`).then(function (result) {
-                        console.log(JSON.stringify(result))
+                        const correctAnswer = result.answer
+                        result.goodEnough = editDistance(correctAnswer, answer, maxEditDistance)
                         resolve(result)
                     })
                 }, Math.max(msLeft, 0))

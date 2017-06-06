@@ -87,7 +87,7 @@
 
     <p>How many picked:</p>
 
-    <dl class="defs screen-stats-choice-amounts">
+    <dl style="display:none" class="defs screen-stats-choice-amounts">
       <dt class="defs-key screen-stats-choice-amount">8</dt>
       <dd class="defs-val screen-stats-choice-answer">Central Park</dd>
 
@@ -100,6 +100,8 @@
       <dt class="defs-key screen-stats-choice-amount">8</dt>
       <dd class="defs-val screen-stats-choice-answer">Central Park</dd>
     </dl>
+
+    <div id="screen-stats-choice-chart" class="ct-chart ct-major-eleventh"></div>
 
     <p class="screen-stats-choice-correct">You did it!</p>
     <p class="screen-stats-choice-wrong">At least you tried or waited until the question timed out!</p>
@@ -130,9 +132,11 @@
     <h1>Results</h1>
 
     <p>Given answers:</p>
-    <dl id="screen-stats-open-answers" class="defs">
+    <dl style="display:none" id="screen-stats-open-answers" class="defs">
 
     </dl>
+
+    <div id="screen-stats-open-chart" class="ct-chart ct-major-eleventh"></div>
 
     <p class="screen-stats-open-correct">You did it!</p>
     <p class="screen-stats-open-wrong">At least you tried or waited until the question timed out!</p>

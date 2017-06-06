@@ -94,7 +94,7 @@ const mod = {
   showScoreboard(scores) {
     setBodyState('is-scoreboard')
 
-    const scoreAmplifier = 100
+    const scoreAmplifier = 1
 
     const names = Object.keys(scores)
     const points = names.map(n => scoreAmplifier*scores[n])
@@ -103,6 +103,9 @@ const mod = {
       series: points,
     }
     const opts = {
+      axisY: {
+        onlyInteger: true,
+      },
       low: 0,
       distributeSeries: true,
     }
@@ -195,10 +198,9 @@ function processOpenAnswer (answer) {
     openInputElem.classList.remove('is-pending')
     openConfirmElem.classList.remove('is-pending')
 
-    // FIXME this is always successful
-    openInputElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
-    openConfirmElem.classList.add(result.success ? 'is-correct' : 'is-wrong')
-    timerElement.classList.add(result.success ? 'is-correct' : 'is-wrong')
+    openInputElem.classList.add(result.goodEnough ? 'is-correct' : 'is-wrong')
+    openConfirmElem.classList.add(result.goodEnough ? 'is-correct' : 'is-wrong')
+    timerElement.classList.add(result.goodEnough ? 'is-correct' : 'is-wrong')
   })
 }
 
@@ -240,6 +242,23 @@ function showStatsChoice (question, answer, result) {
     correctElem.style.display = 'none'
     wrongElem.style.display = 'block'
   }
+
+  const data = {
+    labels: answers,
+    series: amounts,
+  }
+  const opts = {
+    axisY: {
+      onlyInteger: true,
+    },
+    low: 0,
+    distributeSeries: true,
+  }
+  new Chartist.Bar(
+    '#screen-stats-choice-chart',
+    data,
+    opts
+  )
 }
 
 function showStatsEstimate (question, answer, result) {
@@ -284,6 +303,24 @@ function showStatsOpen (question, answer, result) {
     a => `<dt class="defs-key ${a.correct ? 'is-correct' : 'is-wrong'}">${a.count}</dt>
           <dd class="defs-val ${a.correct ? 'is-correct' : 'is-wrong'}">${a.answer}</dd>`
   ).join('') : ''
+
+  const data = {
+    labels: answers.map(a => a.answer),
+    series: answers.map(a => a.count),
+  }
+  const opts = {
+    axisY: {
+      onlyInteger: true,
+    },
+    low: 0,
+    distributeSeries: true,
+  }
+
+  new Chartist.Bar(
+    '#screen-stats-open-chart',
+    data,
+    opts
+  )
 
   const goodEnough = givenAnswer ? editDistance(correctAnswer, givenAnswer, maxEditDistance) : false
 
