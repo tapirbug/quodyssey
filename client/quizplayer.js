@@ -56,6 +56,9 @@ function connectQuiz () {
       if(result.ended) {
         ui.showScoreboard(result.scoreboard)
         clearInterval(interval)
+        if(statsTimeout) {
+          clearTimeout(statsTimeout)
+        }
       }
     })
   }, 500);
@@ -83,10 +86,16 @@ function showQuestion(question) {
     quiz.getResultForQuiz(question.round).then(function(results) {
       if(!answer) {
         // If user did nothing, show statistics immediately
-        ui.showStats(question, undefined, results)
+        if(!ui.isScoreboard()) {
+            ui.showStats(question, undefined, results)
+        }
       } else {
         // If did answer, first show simple feedback and show statistics after a delay
-        setTimeout(() => ui.showStats(question, answer, results), showStatsDelayMs)
+        setTimeout(() => {
+          if(!ui.isScoreboard()) {
+            ui.showStats(question, answer, results)
+          }
+        }, showStatsDelayMs)
       }
     })
   }, questionTimeMs)

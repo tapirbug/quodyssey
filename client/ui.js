@@ -26,6 +26,8 @@ let openAnswerList
 let timerElement
 let timerNumber
 
+let bodyState
+
 let answeredLastShown = true
 
 const statsDelay = 1500
@@ -37,8 +39,7 @@ const mod = {
   processAnswer (answerObj) { return Promise.reject(new Error('No answer processing connected to UI')) },
 
   showWaitingForNextRound () {
-    document.body.classList.remove('is-join')
-    document.body.classList.add('is-play')
+    setBodyState('is-play')
     questionElem.classList.add('is-waiting')
   },
 
@@ -93,18 +94,27 @@ const mod = {
   showScoreboard(scores) {
     setBodyState('is-scoreboard')
 
+    const scoreAmplifier = 100
+
     const names = Object.keys(scores)
-    const points = [ names.map(n => scores[n]) ]
+    const points = names.map(n => scoreAmplifier*scores[n])
     const data = {
       labels: names,
-      series: points
+      series: points,
+    }
+    const opts = {
+      low: 0,
+      distributeSeries: true,
     }
 
     new Chartist.Bar(
       scoreboardChartSel,
-      data
+      data,
+      opts
     )
-  }
+  },
+
+  isScoreboard() { return bodyState === 'is-scoreboard' },
 }
 
 obtainElements()
@@ -113,7 +123,9 @@ wireEvents()
 module.exports = mod
 
 function setBodyState (stateClassName)  {
+  bodyState = stateClassName
   document.body.classList.remove('is-join')
+  document.body.classList.remove('is-play')
   document.body.classList.remove('is-stats-choice')
   document.body.classList.remove('is-stats-estimate')
   document.body.classList.remove('is-stats-open')
@@ -191,9 +203,6 @@ function processOpenAnswer (answer) {
 }
 
 function showStatsChoice (question, answer, result) {
-  document.body.classList.remove('is-play')
-  document.body.classList.add('is-stats-choice')
-
   const solutionIdx = ['a', 'b', 'c', 'd'].indexOf(result.answer)
 
   const amounts = [
@@ -203,6 +212,8 @@ function showStatsChoice (question, answer, result) {
     result.result.d
   ]
   const answers = question.options
+
+  setBodyState('is-stats-choice')
 
   multipleChoiceStatsAnswerElems.forEach(
     (el, idx) => {
@@ -232,16 +243,10 @@ function showStatsChoice (question, answer, result) {
 }
 
 function showStatsEstimate (question, answer, result) {
-  console.log("Showing estimate stats")
-  console.log(question)
-  console.log(answer)
-  console.log(result)
-
   const { max, min, avg, participants } = result.result
   const correctCount = result.result.correct
 
-  document.body.classList.remove('is-play')
-  document.body.classList.add('is-stats-estimate')
+  setBodyState('is-stats-estimate')
 
   estimateAvgElem.textContent = (avg === undefined) ? 'n/a' : avg
   estimateMaxElem.textContent = (max === undefined) ? 'n/a' : max
@@ -259,14 +264,6 @@ function showStatsEstimate (question, answer, result) {
 }
 
 function showStatsOpen (question, answer, result) {
-  console.log("Showing open stats")
-  console.log(question)
-  console.log(answer)
-  console.log(result)
-
-  document.body.classList.remove('is-play')
-  document.body.classList.add('is-stats-open')
-
   const correctAnswer = result.answer
   const givenAnswer = (answer) ? answer.answer : ''
 
@@ -280,6 +277,8 @@ function showStatsOpen (question, answer, result) {
       }
     }
   ).sort((a,b) => b.count - a.count) : []
+
+  setBodyState('is-stats-open')
 
   openAnswerList.innerHTML = answers ? answers.map(
     a => `<dt class="defs-key ${a.correct ? 'is-correct' : 'is-wrong'}">${a.count}</dt>
