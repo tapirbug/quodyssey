@@ -283,7 +283,7 @@ function showStatsOpen (question, answer, result) {
   openAnswerList.innerHTML = answers ? answers.map(
     a => `<dt class="defs-key ${a.correct ? 'is-correct' : 'is-wrong'}">${a.count}</dt>
           <dd class="defs-val ${a.correct ? 'is-correct' : 'is-wrong'}">${a.answer}</dd>`
-  ) : ''
+  ).join('') : ''
 
   const goodEnough = givenAnswer ? editDistance(correctAnswer, givenAnswer, maxEditDistance) : false
 
