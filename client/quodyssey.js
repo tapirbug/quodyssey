@@ -3,6 +3,7 @@ const requestPromise = require('axios')
 const editDistance = require('../source/editDistance')
 const questionPollingIntervalMs = 250
 const maxEditDistance = 2
+const fayeClient = require('./fayeClient.js')
 
 module.exports = function (hostname, port, gameID, username) {
 
@@ -270,29 +271,15 @@ module.exports = function (hostname, port, gameID, username) {
     }
 
     function pollNextQuestion() {
-        return new Promise(function (resolve, reject) {
-            const oldRound = currentQuestion ? currentQuestion.round : -1
-            let activePoll
-
-            setInterval(callback, questionPollingIntervalMs)
-
-            function callback() {
-                if (activePoll) { return; }
-
-                activePoll = obtainCurrentQuestion()
-
-                activePoll.then(function (question) {
-                    if (question && question.round !== oldRound) {
-                        clearInterval(callback)
-                        resolve(question);
-                    } else {
-                        activePoll = undefined
-                    }
-                }).catch(function (err) {
-                    reject(err)
-                })
-            }
-        })
+      return new Promise(function(resolve, reject) {
+        fayeClient.register(
+          gameID,
+          function(question) {
+            currentQuestion = question
+            resolve(question)
+          }
+        )
+      });
     }
 
     function get(path) {

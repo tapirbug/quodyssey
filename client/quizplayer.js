@@ -6,6 +6,7 @@ const path = require('path')
 const quodyssey = require('./quodyssey')
 const hostname = false
 const port = false
+const fayeClient = require('./fayeClient')
 
 const showStatsDelayMs = 3000
 
@@ -51,17 +52,11 @@ function connectQuiz () {
     }
   })
 
-  const interval = setInterval(function() {
-    quiz.getScoreboard().then(result => {
-      if(result.ended) {
-        ui.showScoreboard(result.scoreboard)
-        clearInterval(interval)
-        if(statsTimeout) {
-          clearTimeout(statsTimeout)
-        }
-      }
-    })
-  }, 500);
+  fayeClient.register(gameID, undefined, function(scoreboard) {
+    if(scoreboard.ended) {
+      ui.showScoreboard(scoreboard.scoreboard)
+    }
+  })
 }
 
 function showQuestion(question) {
