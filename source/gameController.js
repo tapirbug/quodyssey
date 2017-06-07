@@ -227,13 +227,23 @@ function answer(req, res) {
         });
     } else if (question.type === 'open') {
         round.distribution = round.distribution || {};
-        if(answer in round.distribution) {
-          round.distribution[answer]++;
+        if (answer in round.distribution) {
+            round.distribution[answer]++;
         } else {
-          round.distribution[answer] = 1;
+            round.distribution[answer] = 1;
         }
 
-        if (editDistance(quizController.getAnswer(round.question), answer, maxEditDistance)) {
+        const correctAnswer = quizController.getAnswer(round.question);
+        if (Array.isArray(correctAnswer)) {
+            for (let i = 0; i < correctAnswer.length; i++) {
+                if (editDistance(correctAnswer[i], answer, maxEditDistance)) {
+                    round.correct++;
+                    games[gameId].users[username].score++;
+                    break;
+                }
+            }
+        }
+        else if (editDistance(correctAnswer, answer, maxEditDistance)) {
             round.correct++;
             games[gameId].users[username].score++;
         }
@@ -342,7 +352,7 @@ function sendQuestionData(gameId) {
     const game = games[gameId];
     const round = game.rounds[game.roundId];
     const remainingTime = round.end.getTime() - new Date().getTime();
-    
+
     fayeController.sendNotification(gameId, {
         type: 'question',
         data: {
