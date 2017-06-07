@@ -1,8 +1,6 @@
 const faye = require('faye');
 
-const baseUrl = "http://"+window.location.host
-console.log(`${baseUrl}/channel/`)
-const client = new faye.Client(`${baseUrl}/channel/`);
+const client = new faye.Client(`http://${window.location.host}:63546/channel/`);
 
 function register(channel, callbackQuestion, callbackScoreboard) {
     client.subscribe(`/${channel}`, notification => {

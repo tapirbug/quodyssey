@@ -33,7 +33,7 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
-const port = process.env.QUOVADIS_PORT || 3333
+const port = process.env.QUOVADIS_PORT || 63546
 const server = app.listen(port, () => {
     console.log(`Server is now listening on port ${port}.`)
     fayeController.attachFaye(server, '/channel');
