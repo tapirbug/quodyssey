@@ -195,6 +195,8 @@ function processOpenAnswer (answer) {
     type: "open",
     answer
   }).then(function (result) {
+    document.querySelector('.question-answer-open-btn-text-solution-text').textContent = result.answer
+
     openInputElem.classList.remove('is-pending')
     openConfirmElem.classList.remove('is-pending')
 

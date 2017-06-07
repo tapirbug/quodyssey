@@ -63,28 +63,39 @@ body {
 }
 
 .question-answer-estimate-btn-text-submitted,
-.question-answer-estimate-btn-text-solution {
+.question-answer-estimate-btn-text-solution,
+.question-answer-open-btn-text-submitted,
+.question-answer-open-btn-text-solution {
   display: none;
 }
 
 .question-answer-estimate-btn.is-correct .question-answer-estimate-btn-text-solution,
-.question-answer-estimate-btn.is-wrong .question-answer-estimate-btn-text-solution {
+.question-answer-estimate-btn.is-wrong .question-answer-estimate-btn-text-solution,
+.question-answer-open-btn.is-correct .question-answer-open-btn-text-solution,
+.question-answer-open-btn.is-wrong .question-answer-open-btn-text-solution {
   display: inline;
 }
 
 .question-answer-estimate-btn.is-pending .question-answer-estimate-btn-text-submit,
 .question-answer-estimate-btn.is-correct .question-answer-estimate-btn-text-submit,
-.question-answer-estimate-btn.is-wrong .question-answer-estimate-btn-text-submit {
+.question-answer-estimate-btn.is-wrong .question-answer-estimate-btn-text-submit,
+.question-answer-open-btn.is-pending .question-answer-open-btn-text-submit,
+.question-answer-open-btn.is-correct .question-answer-open-btn-text-submit,
+.question-answer-open-btn.is-wrong .question-answer-open-btn-text-submit {
   display: none;
 }
 
 .question-answer-estimate-btn.is-pending .question-answer-estimate-btn-text-submitted,
 .question-answer-estimate-btn.is-correct .question-answer-estimate-btn-text-submitted,
-.question-answer-estimate-btn.is-wrong .question-answer-estimate-btn-text-submitted {
+.question-answer-estimate-btn.is-wrong .question-answer-estimate-btn-text-submitted,
+.question-answer-open-btn.is-pending .question-answer-open-btn-text-submitted,
+.question-answer-open-btn.is-correct .question-answer-open-btn-text-submitted,
+.question-answer-open-btn.is-wrong .question-answer-open-btn-text-submitted {
   display: inline;
 }
 
 .question-answer-estimate-btn.is-wrong,
+.question-answer-open-btn.is-wrong,
 .question-answer-choice.is-picked.is-wrong {
   background-color: rgba(223,14,14,0.25);
   border: 8px solid #df0e0e !important;
@@ -153,7 +164,8 @@ body {
 	padding-left: 20px;
 }
 
-.question-answer-estimate-btn {
+.question-answer-estimate-btn,
+.question-answer-open-btn {
 	font-size: 20pt;
 	background-color: rgba(174,223,238,0.4);
 	border: 6px solid rgba(0,185,239,0.4) !important;
