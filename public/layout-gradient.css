@@ -1,0 +1,31 @@
+
+.border {
+  border: none; /* Reset */
+  border-top: 20px solid #3ACFD5;
+  border-bottom: 20px solid #3a4ed5;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-position: 0 0, 100% 0;
+  background-repeat: no-repeat;
+  background-size: 20px 100%;
+  background-image: linear-gradient(to bottom, #3acfd5 0%, #3a4ed5 100%), linear-gradient(to bottom, #3acfd5 0%, #3a4ed5 100%);
+}
+
+#roomcode {
+  border: none;
+  padding: 1em 2em;
+}
+
+#timer {
+  border: none;
+  left: 20px;
+  right: 20px;
+  width: auto;
+  bottom: -1em;
+}
+
+.question-prompt {
+  border: none;
+  padding: 1em 2em;
+}
