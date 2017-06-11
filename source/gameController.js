@@ -233,17 +233,7 @@ function answer(req, res) {
             round.distribution[answer] = 1;
         }
 
-        const correctAnswer = quizController.getAnswer(round.question);
-        if (Array.isArray(correctAnswer)) {
-            for (let i = 0; i < correctAnswer.length; i++) {
-                if (editDistance(correctAnswer[i], answer, maxEditDistance)) {
-                    round.correct++;
-                    games[gameId].users[username].score++;
-                    break;
-                }
-            }
-        }
-        else if (editDistance(correctAnswer, answer, maxEditDistance)) {
+        if (editDistance(quizController.getAnswer(round.question), answer, maxEditDistance)) {
             round.correct++;
             games[gameId].users[username].score++;
         }
@@ -334,7 +324,7 @@ function end(req, res) {
         error: 'Game not found.'
     });
     games[gameId].ended = true;
-    openIds.push(gameId);
+    openIds.push(parseInt(gameId));
     sendScoreboardData(gameId);
     return res.json({
         success: true
