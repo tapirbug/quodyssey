@@ -1,0 +1,15 @@
+
+.border {
+  animation-name: chromaborder;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes chromaborder {
+    0%   { border-color: hsl(72, 100%, 67%);}
+    25%  { border-color: hsl(144, 100%, 67%);}
+    50%  { border-color: hsl(216, 100%, 67%);}
+    75%  { border-color: hsl(288, 100%, 67%);}
+    100% { border-color: hsl(360, 100%, 67%);}
+}
